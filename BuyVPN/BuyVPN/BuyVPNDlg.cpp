@@ -48,8 +48,8 @@ void CBuyVPNDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_CONFIGURATION, m_cobConfiguration);
 	DDX_Control(pDX, IDC_COMBO_NETWORK, m_cobNetAdapter);
 	DDX_Control(pDX, IDC_CHECK_ACCOUNT_STATE, m_chbCheckAccount);
-	DDX_Control(pDX, IDC_CHECK_ACCOUNT_STATE2, m_chbCheckAccount2);
-	DDX_Control(pDX, IDC_CHECK_ACCOUNT_STATE3, m_chbCheckAccount3);
+	//DDX_Control(pDX, IDC_CHECK_ACCOUNT_STATE2, m_chbCheckAccount2);
+	//DDX_Control(pDX, IDC_CHECK_ACCOUNT_STATE3, m_chbCheckAccount3);
 	//DDX_Control(pDX, IDC_CHECK_LAUNCH_ONSTART, m_chbLaunchOnStart);
 	DDX_Control(pDX, IDC_STATIC_MEMBER_AREA, m_stMemberArea);
 	DDX_Control(pDX, IDC_BUTTON_CONNECT, m_btnConnect);
@@ -61,6 +61,12 @@ void CBuyVPNDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STATIC_STATUS_TEXT, m_stStatusText);
 	DDX_Control(pDX, IDC_STATIC_BALANCE_TEXT, m_stBalanceText);
 	DDX_Control(pDX, IDC_STATIC_EXPIRES_TEXT, m_stExpiresText);
+	//	DDX_Control(pDX, IDC_RADIO_SINGLE_VPN, m_rbSingleVpn);
+	DDX_Control(pDX, IDC_RADIO_SINGLE_VPN, m_rbSingleVpn);
+	DDX_Control(pDX, IDC_RADIO_DOUBLE_VPN, m_rbDoubleVpn);
+	DDX_Control(pDX, IDC_RADIO_TRIPLE_VPN, m_rbTripleVpn);
+	DDX_Control(pDX, IDC_RADIO_QUADRO_VPN, m_rbQuadroVpn);
+	DDX_Control(pDX, IDC_RADIO_PENTA_VPN, m_rbPentaVpn);
 }
 
 BEGIN_MESSAGE_MAP(CBuyVPNDlg, CDialog)
@@ -89,6 +95,11 @@ BEGIN_MESSAGE_MAP(CBuyVPNDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_MIN, &CBuyVPNDlg::OnBnClickedButtonMin)
 	ON_CBN_SELCHANGE(IDC_COMBO_NETWORK, &CBuyVPNDlg::OnCbnSelchangeComboNetwork)
 	ON_BN_CLICKED(IDC_CHECK_ACCOUNT_STATE2, &CBuyVPNDlg::OnBnClickedCheckAccountState2)
+	ON_BN_CLICKED(IDC_RADIO_SINGLE_VPN, &CBuyVPNDlg::OnBnClickedRadioSingleVpn)
+	ON_BN_CLICKED(IDC_RADIO_DOUBLE_VPN, &CBuyVPNDlg::OnBnClickedRadioDoubleVpn)
+	ON_BN_CLICKED(IDC_RADIO_TRIPLE_VPN, &CBuyVPNDlg::OnBnClickedRadioTripleVpn)
+	ON_BN_CLICKED(IDC_RADIO_QUADRO_VPN, &CBuyVPNDlg::OnBnClickedRadioQuadroVpn)
+	ON_BN_CLICKED(IDC_RADIO_PENTA_VPN, &CBuyVPNDlg::OnBnClickedRadioPentaVpn)
 END_MESSAGE_MAP()
 
 
@@ -162,6 +173,9 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	m_btnMin.SetBitmaps(IDB_MINHL, RGB(0x3a,0x3a,0x3a), IDB_MIN, RGB(0x3a,0x3a,0x3a));
 	
 
+	m_rbSingleVpn.SetCheck(true);
+	UpdateConfigurations();
+
 	//Загрузка настроек
 	m_pOptions->Load();
 
@@ -184,18 +198,12 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	m_curHand = LoadCursor(NULL, IDC_HAND);
 
 	//Загрузим список конфигураций
-	m_pConfigurations->Update();
-	CList<CString,CString>* pList = m_pConfigurations->GetNameList();
-	POSITION pos = pList->GetHeadPosition();
-	while (pos)
-	{
-		m_cobConfiguration.AddString(pList->GetNext(pos));
-	}
-
+	UpdateConfigurations();
+	
 	//Получение списка сетевых адаптеров
 	m_pNetAdapters->Update();
-	pList = m_pNetAdapters->GetNameList();
-	pos = pList->GetHeadPosition();
+	CList<CString, CString> *pList = m_pNetAdapters->GetNameList();
+	POSITION pos = pList->GetHeadPosition();
 	while (pos)
 	{
 		m_cobNetAdapter.AddString(pList->GetNext(pos));
@@ -211,6 +219,20 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	AddNotifyIcon();
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+
+void CBuyVPNDlg::UpdateConfigurations()
+{
+	m_cobConfiguration.ResetContent();
+	m_pConfigurations->Update();
+	CList<CString, CString>* pList = m_pConfigurations->GetNameList();
+	POSITION pos = pList->GetHeadPosition();
+	while (pos)
+	{
+		m_cobConfiguration.AddString(pList->GetNext(pos));
+	}
+	m_cobConfiguration.SetCurSel(0);
 }
 
 void CBuyVPNDlg::OnDestroy()
@@ -417,7 +439,9 @@ void CBuyVPNDlg::OnBnClickedButtonConnect()
 
 void CBuyVPNDlg::OnBnClickedButtonExit()
 {
-	ShowWindow(SW_HIDE);
+	//ShowWindow(SW_HIDE);
+	
+	EndDialog(0);
 }
 
 void CBuyVPNDlg::OnBnClickedButtonMin()
@@ -539,6 +563,7 @@ HBRUSH CBuyVPNDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
 
+
 	int nCtrlId = pWnd->GetDlgCtrlID();
 	if (nCtrlId == IDC_STATIC_MEMBER_AREA)
 	{
@@ -551,7 +576,13 @@ HBRUSH CBuyVPNDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		|| nCtrlId == IDC_STATIC_EXPIRES_TEXT
 		|| nCtrlId == IDC_STATIC_BALANCE_TEXT
 		|| nCtrlId == IDC_STATIC_CONFIGURATION_TEXT
-		|| nCtrlId == IDC_STATIC_NETADAPTER_TEXT)
+		|| nCtrlId == IDC_STATIC_NETADAPTER_TEXT
+		|| nCtrlId == IDC_RADIO_SINGLE_VPN
+		|| nCtrlId == IDC_RADIO_DOUBLE_VPN
+		|| nCtrlId == IDC_RADIO_TRIPLE_VPN
+		|| nCtrlId == IDC_RADIO_QUADRO_VPN
+		|| nCtrlId == IDC_RADIO_PENTA_VPN
+		|| nCtrlId == IDC_STATIC_VPNCHAINS_TEXT)
 	{
 		pDC->SetTextColor(0xffffff);
 		pDC->SetBkMode(TRANSPARENT);
@@ -781,3 +812,34 @@ void CBuyVPNDlg::OnBnClickedCheckAccountState2()
 {
 	// TODO: Add your control notification handler code here
 }
+
+
+void CBuyVPNDlg::OnBnClickedRadioSingleVpn()
+{
+	UpdateConfigurations();
+}
+
+
+void CBuyVPNDlg::OnBnClickedRadioDoubleVpn()
+{
+	UpdateConfigurations();
+}
+
+
+void CBuyVPNDlg::OnBnClickedRadioTripleVpn()
+{
+	UpdateConfigurations();
+}
+
+
+void CBuyVPNDlg::OnBnClickedRadioQuadroVpn()
+{
+	UpdateConfigurations();
+}
+
+
+void CBuyVPNDlg::OnBnClickedRadioPentaVpn()
+{
+	UpdateConfigurations();
+}
+

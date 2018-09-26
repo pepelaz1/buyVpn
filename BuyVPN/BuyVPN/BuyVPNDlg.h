@@ -63,6 +63,13 @@ protected:
 	afx_msg void OnCbnSelchangeComboNetwork();
 	afx_msg void OnBnClickedButtonEdit();
 	afx_msg void OnBnClickedButtonShowlog();
+	afx_msg void OnBnClickedCheckAccountState2();
+
+	afx_msg void OnBnClickedRadioSingleVpn();
+	afx_msg void OnBnClickedRadioDoubleVpn();
+	afx_msg void OnBnClickedRadioTripleVpn();
+	afx_msg void OnBnClickedRadioQuadroVpn();
+	afx_msg void OnBnClickedRadioPentaVpn();
 	void AddNotifyIcon();
 	void ModifyNotifyIcon(BOOL fConnected);
 	void DeleteNotifyIcon();
@@ -73,6 +80,7 @@ protected:
 	void ChangeState(DWORD dwState);
 	HICON LoadSmIcon(DWORD dwResId);
 	void CheckConfig(BOOL fUpdateAlways, CString strVersion, CString strUrl);
+	void UpdateConfigurations();
 		
 
 	HICON m_hIcon;
@@ -88,6 +96,7 @@ protected:
 	CColorCheck m_chbCheckAccount;
 	CColorCheck m_chbCheckAccount2;
 	CColorCheck m_chbCheckAccount3;
+
 	CColorCheck m_chbLaunchOnStart;
 	CStatic m_stMemberArea;
 	HCURSOR m_curHand;
@@ -110,6 +119,10 @@ protected:
 	CStatic m_stStatusText;
 	CStatic m_stBalanceText;
 	CStatic m_stExpiresText;
-public:
-	afx_msg void OnBnClickedCheckAccountState2();
+	CButton m_rbSingleVpn;
+
+	CButton m_rbDoubleVpn;
+	CButton m_rbTripleVpn;
+	CButton m_rbQuadroVpn;
+	CButton m_rbPentaVpn;
 };

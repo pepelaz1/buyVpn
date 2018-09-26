@@ -52,6 +52,13 @@
 #define IDC_STATIC_BALANCE_TEXT         1023
 #define IDC_STATIC_CONFIGURATION_TEXT   1024
 #define IDC_STATIC_NETADAPTER_TEXT      1025
+#define IDC_RADIO_SINGLE_VPN            1027
+#define IDC_RADIO_DOUBLE_VPN            1028
+#define IDC_RADIO_TRIPLE_VPN            1029
+#define IDC_RADIO_QUADRO_VPN            1030
+#define IDC_RADIO_PENTA_VPN             1031
+#define IDC_STATIC_CONFIGURATION_TEXT2  1032
+#define IDC_STATIC_VPNCHAINS_TEXT       1032
 #define ID_TRAYMENU_SHOW                32771
 #define ID_TRAYMENU_EXIT                32772
 #define ID_TRAYMENU_CONNECT             32773
@@ -64,7 +71,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        151
 #define _APS_NEXT_COMMAND_VALUE         32776
-#define _APS_NEXT_CONTROL_VALUE         1026
+#define _APS_NEXT_CONTROL_VALUE         1028
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
