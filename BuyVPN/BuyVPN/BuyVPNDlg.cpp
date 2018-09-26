@@ -48,9 +48,6 @@ void CBuyVPNDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_CONFIGURATION, m_cobConfiguration);
 	DDX_Control(pDX, IDC_COMBO_NETWORK, m_cobNetAdapter);
 	DDX_Control(pDX, IDC_CHECK_ACCOUNT_STATE, m_chbCheckAccount);
-	//DDX_Control(pDX, IDC_CHECK_ACCOUNT_STATE2, m_chbCheckAccount2);
-	//DDX_Control(pDX, IDC_CHECK_ACCOUNT_STATE3, m_chbCheckAccount3);
-	//DDX_Control(pDX, IDC_CHECK_LAUNCH_ONSTART, m_chbLaunchOnStart);
 	DDX_Control(pDX, IDC_STATIC_MEMBER_AREA, m_stMemberArea);
 	DDX_Control(pDX, IDC_BUTTON_CONNECT, m_btnConnect);
 	DDX_Control(pDX, IDC_BUTTON_EDIT, m_btnEdit);
@@ -61,7 +58,6 @@ void CBuyVPNDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STATIC_STATUS_TEXT, m_stStatusText);
 	DDX_Control(pDX, IDC_STATIC_BALANCE_TEXT, m_stBalanceText);
 	DDX_Control(pDX, IDC_STATIC_EXPIRES_TEXT, m_stExpiresText);
-	//	DDX_Control(pDX, IDC_RADIO_SINGLE_VPN, m_rbSingleVpn);
 	DDX_Control(pDX, IDC_RADIO_SINGLE_VPN, m_rbSingleVpn);
 	DDX_Control(pDX, IDC_RADIO_DOUBLE_VPN, m_rbDoubleVpn);
 	DDX_Control(pDX, IDC_RADIO_TRIPLE_VPN, m_rbTripleVpn);
@@ -72,6 +68,8 @@ void CBuyVPNDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STATIC_USERNAME, m_stUsername);
 	DDX_Control(pDX, IDC_STATIC_PASSWORD, m_stPassword);
 	DDX_Control(pDX, IDC_STATIC_CONFIGURATION_TEXT, m_stSelectConfiguration);
+	DDX_Control(pDX, IDC_STATIC_NETADAPTER_TEXT, m_stNetAdapter);
+	DDX_Control(pDX, IDC_STATIC_VPNCHAINS_TEXT, m_stVpnChains);
 }
 
 BEGIN_MESSAGE_MAP(CBuyVPNDlg, CDialog)
@@ -557,6 +555,12 @@ void CBuyVPNDlg::ApplyOptions()
 	}
 	m_chbCheckAccount.SetCheck(m_pOptions->m_fCheckAccount ? BST_CHECKED : BST_UNCHECKED);
 	m_chbLaunchOnStart.SetCheck(m_pOptions->m_fLaunchOnStart ? BST_CHECKED : BST_UNCHECKED);
+
+
+	if (m_pOptions->m_strLanguage.IsEmpty())
+		m_pOptions->m_strLanguage = L"Engligh";
+
+	UpdateUITexts();
 }
 
 void CBuyVPNDlg::OnEnChangeEditLogin()
@@ -720,31 +724,31 @@ void CBuyVPNDlg::ChangeState(DWORD dwState)
 	switch (dwState)
 	{
 	case VVC_STATE_DISCONNECTED:
-		m_btnConnect.SetWindowText(TEXT("Connect"));
+		m_btnConnect.SetWindowText(m_langManager.GetText(L"Connect"));
 		m_btnConnect.EnableWindow(TRUE);
-		m_stStatusText.SetWindowText(TEXT("Disconnected."));
+		m_stStatusText.SetWindowText(m_langManager.GetText(L"Disconnected"));
 		ModifyNotifyIcon(FALSE);
 		break;
 	case VVC_STATE_STARTING:
-		m_btnConnect.SetWindowText(TEXT("Disconnect"));
+		m_btnConnect.SetWindowText(m_langManager.GetText(L"Disconnect"));
 		m_btnConnect.EnableWindow(FALSE);
-		m_stStatusText.SetWindowText(TEXT("Connecting..."));
+		m_stStatusText.SetWindowText(m_langManager.GetText(L"Connecting"));
 		break;
 	case VVC_STATE_CONNECTING:
-		m_btnConnect.SetWindowText(TEXT("Disconnect"));
+		m_btnConnect.SetWindowText(m_langManager.GetText(L"Disconnect"));
 		m_btnConnect.EnableWindow(TRUE);
-		m_stStatusText.SetWindowText(TEXT("Connecting..."));
+		m_stStatusText.SetWindowText(m_langManager.GetText(L"Connecting"));
 		break;
 	case VVC_STATE_CONNECTED:
-		m_btnConnect.SetWindowText(TEXT("Disconnect"));
+		m_btnConnect.SetWindowText(m_langManager.GetText(L"Disconnect"));
 		m_btnConnect.EnableWindow(TRUE);
-		m_stStatusText.SetWindowText(TEXT("Connected."));
+		m_stStatusText.SetWindowText(m_langManager.GetText(L"Connected"));
 		ModifyNotifyIcon(TRUE);
 		break;
 	case VVC_STATE_DISCONNECTING:
-		m_btnConnect.SetWindowText(TEXT("Connect"));
+		m_btnConnect.SetWindowText(m_langManager.GetText(L"Connect"));
 		m_btnConnect.EnableWindow(FALSE);
-		m_stStatusText.SetWindowText(TEXT("Disconnecting..."));
+		m_stStatusText.SetWindowText(m_langManager.GetText(L"Disconnecting"));
 		ModifyNotifyIcon(FALSE);
 		break;
 	}
@@ -766,16 +770,16 @@ HICON CBuyVPNDlg::LoadSmIcon(DWORD dwResId)
 
 void CBuyVPNDlg::SetAccountInfo(CString strBalance, CString strExpires)
 {
-	m_strBalance = TEXT("Balance: ") + strBalance;
-	m_strExpires = TEXT("Expires: ") + strExpires;
+	m_strBalance = strBalance;
+	m_strExpires = strExpires;
+
+	PostMessage(WM_UPDATEACCINFO, NULL, NULL);
 }
 
 LRESULT CBuyVPNDlg::OnUpdateAccInfo(WPARAM wParam, LPARAM lParam)
 {
-///m_stExpiresText.SetWindowText(m_strExpires);
-	m_stExpiresText.SetWindowText(L"Expires - 2018-12-30 09:17:52");
-	m_stBalanceText.SetWindowText(m_strBalance);
-
+	m_stExpiresText.SetWindowText(m_langManager.GetText(L"Balance") + m_strBalance);
+	m_stBalanceText.SetWindowText(m_langManager.GetText(L"Expires") + m_strExpires);
 	return TRUE;
 }
 
@@ -912,20 +916,42 @@ void CBuyVPNDlg::OnBnClickedRadioPentaVpn()
 
 void CBuyVPNDlg::OnBnClickedButtonEnglish()
 {
-	m_langManager.SetLanguage(English);
+	m_pOptions->m_strLanguage = L"English";
 	UpdateUITexts();
 }
 
 
 void CBuyVPNDlg::OnBnClickedButtonRussian()
 {
-	m_langManager.SetLanguage(Russian);
+	m_pOptions->m_strLanguage = L"Russian";
 	UpdateUITexts();
 }
 
 void CBuyVPNDlg::UpdateUITexts()
 {
+	if (m_pOptions->m_strLanguage == L"English")
+		m_langManager.SetLanguage(English);
+	else if (m_pOptions->m_strLanguage == L"Russian")
+		m_langManager.SetLanguage(Russian);
+
 	m_stUsername.SetWindowText(m_langManager.GetText(L"Login"));
 	m_stPassword.SetWindowText(m_langManager.GetText(L"Password"));
+	m_chbSavePass.SetWindowText(m_langManager.GetText(L"SaveLogin"));
+	m_chbSavePass.Invalidate();
+	m_stMemberArea.SetWindowText(m_langManager.GetText(L"MemberArea"));
+	m_stSelectConfiguration.SetWindowText(m_langManager.GetText(L"SelectConfiguration"));
+	m_stNetAdapter.SetWindowText(m_langManager.GetText(L"NetAdapter"));
+	m_chbCheckAccount.SetWindowText(m_langManager.GetText(L"CheckAccount"));
+	m_chbCheckAccount.Invalidate();
+
+	PostMessage(WM_UPDATEACCINFO, NULL, NULL);
+
+	ChangeState(m_dwState);
+
+	m_stVpnChains.SetWindowText(m_langManager.GetText(L"SelectVpnChains"));
+	m_btnEdit.SetWindowText(m_langManager.GetText(L"Edit"));
+	m_btnShowLog.SetWindowText(m_langManager.GetText(L"ShowLog"));
+
+	m_pOptions->Save(VCOF_LANGUAGE);
 }
 

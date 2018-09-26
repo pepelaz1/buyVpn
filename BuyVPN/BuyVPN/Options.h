@@ -10,6 +10,7 @@
 #define VCOF_LAUNCHSTART	0x00000080
 #define VCOF_CONFIGVERSION	0x00000100
 #define VCOF_FOLDER			0x00000200
+#define VCOF_LANGUAGE		0x00000400
 #define VCOF_ALL			0xFFFFFFFF
 
 class COptions
@@ -30,6 +31,7 @@ public:
 	BOOL m_fCheckAccount;
 	BOOL m_fLaunchOnStart;
 	CString m_strConfigVer;
+	CString m_strLanguage;
 
 private:
 	TCHAR* DecodePassword(TCHAR* pass);

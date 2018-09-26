@@ -71,6 +71,11 @@ BOOL COptions::Load()
 		RegQueryValueEx(hKey, TEXT("ConfigVersion"), 0, NULL, (BYTE*)szBuffer, &dwSize);
 		m_strConfigVer = szBuffer;
 
+		dwSize = sizeof(szBuffer);
+		ZeroMemory(szBuffer, dwSize);
+		RegQueryValueEx(hKey, TEXT("Language"), 0, NULL, (BYTE*)szBuffer, &dwSize);
+		m_strLanguage = szBuffer;
+
 		fRes = TRUE;
 		RegCloseKey(hKey);
 	}
@@ -132,6 +137,11 @@ BOOL COptions::Save(DWORD dwOptionsFlag)
 		if (dwOptionsFlag & VCOF_CONFIGVERSION)
 		{
 			RegSetValueEx(hKey, TEXT("ConfigVersion"), 0, REG_SZ, (const BYTE*)(const TCHAR*)m_strConfigVer, (m_strConfigVer.GetLength() + 1)*sizeof(TCHAR));
+		}
+
+		if (dwOptionsFlag & VCOF_LANGUAGE)
+		{
+			RegSetValueEx(hKey, TEXT("Language"), 0, REG_SZ, (const BYTE*)(const TCHAR*)m_strLanguage, (m_strLanguage.GetLength() + 1) * sizeof(TCHAR));
 		}
 
 

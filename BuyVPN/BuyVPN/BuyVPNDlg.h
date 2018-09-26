@@ -137,4 +137,6 @@ public:
 	CStatic m_stUsername;
 	CStatic m_stPassword;
 	CStatic m_stSelectConfiguration;
+	CStatic m_stNetAdapter;
+	CStatic m_stVpnChains;
 };
