@@ -27,7 +27,6 @@
 #define IDB_ENG                         153
 #define IDB_ENGHL                       154
 #define IDB_RUS                         155
-#define IDB_BITMAP4                     156
 #define IDB_RUSHL                       156
 #define IDC_EDIT_LOGIN                  1000
 #define IDC_EDIT_PASSWORD               1001

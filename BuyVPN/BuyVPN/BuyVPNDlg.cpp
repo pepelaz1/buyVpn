@@ -69,6 +69,9 @@ void CBuyVPNDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RADIO_PENTA_VPN, m_rbPentaVpn);
 	DDX_Control(pDX, IDC_BUTTON_ENGLISH, m_btnEng);
 	DDX_Control(pDX, IDC_BUTTON_RUSSIAN, m_btnRus);
+	DDX_Control(pDX, IDC_STATIC_USERNAME, m_stUsername);
+	DDX_Control(pDX, IDC_STATIC_PASSWORD, m_stPassword);
+	DDX_Control(pDX, IDC_STATIC_CONFIGURATION_TEXT, m_stSelectConfiguration);
 }
 
 BEGIN_MESSAGE_MAP(CBuyVPNDlg, CDialog)
@@ -102,6 +105,8 @@ BEGIN_MESSAGE_MAP(CBuyVPNDlg, CDialog)
 	ON_BN_CLICKED(IDC_RADIO_TRIPLE_VPN, &CBuyVPNDlg::OnBnClickedRadioTripleVpn)
 	ON_BN_CLICKED(IDC_RADIO_QUADRO_VPN, &CBuyVPNDlg::OnBnClickedRadioQuadroVpn)
 	ON_BN_CLICKED(IDC_RADIO_PENTA_VPN, &CBuyVPNDlg::OnBnClickedRadioPentaVpn)
+	ON_BN_CLICKED(IDC_BUTTON_ENGLISH, &CBuyVPNDlg::OnBnClickedButtonEnglish)
+	ON_BN_CLICKED(IDC_BUTTON_RUSSIAN, &CBuyVPNDlg::OnBnClickedButtonRussian)
 END_MESSAGE_MAP()
 
 
@@ -234,6 +239,8 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	//ƒобавлем иконку в трей и загружаем меню дл€ нее
 	m_TrayMenu.LoadMenu(IDR_TRAY_MENU);
 	AddNotifyIcon();
+
+	UpdateUITexts();
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -899,5 +906,26 @@ void CBuyVPNDlg::OnBnClickedRadioQuadroVpn()
 void CBuyVPNDlg::OnBnClickedRadioPentaVpn()
 {
 	UpdateConfigurations();
+}
+
+
+
+void CBuyVPNDlg::OnBnClickedButtonEnglish()
+{
+	m_langManager.SetLanguage(English);
+	UpdateUITexts();
+}
+
+
+void CBuyVPNDlg::OnBnClickedButtonRussian()
+{
+	m_langManager.SetLanguage(Russian);
+	UpdateUITexts();
+}
+
+void CBuyVPNDlg::UpdateUITexts()
+{
+	m_stUsername.SetWindowText(m_langManager.GetText(L"Login"));
+	m_stPassword.SetWindowText(m_langManager.GetText(L"Password"));
 }
 

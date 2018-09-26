@@ -12,6 +12,7 @@
 #include "BtnST.h"
 #include "ColorCheck.h"
 #include "afxwin.h"
+#include "LanguageManager.h"
 
 
 #define VVC_STATE_DISCONNECTED		0x00000001
@@ -64,12 +65,14 @@ protected:
 	afx_msg void OnBnClickedButtonEdit();
 	afx_msg void OnBnClickedButtonShowlog();
 	afx_msg void OnBnClickedCheckAccountState2();
-
 	afx_msg void OnBnClickedRadioSingleVpn();
 	afx_msg void OnBnClickedRadioDoubleVpn();
 	afx_msg void OnBnClickedRadioTripleVpn();
 	afx_msg void OnBnClickedRadioQuadroVpn();
 	afx_msg void OnBnClickedRadioPentaVpn();
+	afx_msg void OnBnClickedButtonEnglish();
+	afx_msg void OnBnClickedButtonRussian();
+
 	void AddNotifyIcon();
 	void ModifyNotifyIcon(BOOL fConnected);
 	void DeleteNotifyIcon();
@@ -81,7 +84,8 @@ protected:
 	HICON LoadSmIcon(DWORD dwResId);
 	void CheckConfig(BOOL fUpdateAlways, CString strVersion, CString strUrl);
 	void UpdateConfigurations();
-		
+	void UpdateUITexts();
+
 
 	HICON m_hIcon;
 	BOOL m_fNeedClose;
@@ -125,7 +129,12 @@ protected:
 	CButton m_rbTripleVpn;
 	CButton m_rbQuadroVpn;
 	CButton m_rbPentaVpn;
-public:
 	CButtonST m_btnEng;
 	CButtonST m_btnRus;
+
+	CLanguageManager m_langManager;
+public:
+	CStatic m_stUsername;
+	CStatic m_stPassword;
+	CStatic m_stSelectConfiguration;
 };

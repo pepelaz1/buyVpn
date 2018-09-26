@@ -113,6 +113,7 @@
     <ClCompile Include="BtnST.cpp" />
     <ClCompile Include="BuyVPN.cpp" />
     <ClCompile Include="BuyVPNDlg.cpp" />
+    <ClCompile Include="LanguageManager.cpp" />
     <ClCompile Include="ColorCheck.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="Configurations.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="BtnST.h" />
     <ClInclude Include="BuyVPN.h" />
     <ClInclude Include="BuyVPNDlg.h" />
+    <ClInclude Include="LanguageManager.h" />
     <ClInclude Include="ColorCheck.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Config.h" />
