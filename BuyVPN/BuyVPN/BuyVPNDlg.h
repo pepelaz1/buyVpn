@@ -125,4 +125,7 @@ protected:
 	CButton m_rbTripleVpn;
 	CButton m_rbQuadroVpn;
 	CButton m_rbPentaVpn;
+public:
+	CButtonST m_btnEng;
+	CButtonST m_btnRus;
 };

@@ -67,6 +67,8 @@ void CBuyVPNDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RADIO_TRIPLE_VPN, m_rbTripleVpn);
 	DDX_Control(pDX, IDC_RADIO_QUADRO_VPN, m_rbQuadroVpn);
 	DDX_Control(pDX, IDC_RADIO_PENTA_VPN, m_rbPentaVpn);
+	DDX_Control(pDX, IDC_BUTTON_ENGLISH, m_btnEng);
+	DDX_Control(pDX, IDC_BUTTON_RUSSIAN, m_btnRus);
 }
 
 BEGIN_MESSAGE_MAP(CBuyVPNDlg, CDialog)
@@ -173,8 +175,22 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	m_btnMin.SetBitmaps(IDB_MINHL, RGB(0x3a,0x3a,0x3a), IDB_MIN, RGB(0x3a,0x3a,0x3a));
 	
 
-	m_rbSingleVpn.SetCheck(true);
-	UpdateConfigurations();
+	m_btnEng.SetFlat(TRUE, FALSE);
+	m_btnEng.DrawBorder(FALSE, FALSE);
+	m_btnEng.SetBtnCursor(32649, FALSE);
+	m_btnEng.SetColor(CButtonST::BTNST_COLOR_BK_IN, RGB(0x3a, 0x3a, 0x3a), FALSE);
+	m_btnEng.SetColor(CButtonST::BTNST_COLOR_BK_OUT, RGB(0x3a, 0x3a, 0x3a), FALSE);
+	m_btnEng.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, RGB(0x3a, 0x3a, 0x3a), FALSE);
+	m_btnEng.SetBitmaps(IDB_ENGHL, RGB(0x3a, 0x3a, 0x3a), IDB_ENG, RGB(0x3a, 0x3a, 0x3a));
+
+	m_btnRus.SetFlat(TRUE, FALSE);
+	m_btnRus.DrawBorder(FALSE, FALSE);
+	m_btnRus.SetBtnCursor(32649, FALSE);
+	m_btnRus.SetColor(CButtonST::BTNST_COLOR_BK_IN, RGB(0x3a, 0x3a, 0x3a), FALSE);
+	m_btnRus.SetColor(CButtonST::BTNST_COLOR_BK_OUT, RGB(0x3a, 0x3a, 0x3a), FALSE);
+	m_btnRus.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, RGB(0x3a, 0x3a, 0x3a), FALSE);
+	m_btnRus.SetBitmaps(IDB_RUSHL, RGB(0x3a, 0x3a, 0x3a), IDB_RUS, RGB(0x3a, 0x3a, 0x3a));
+
 
 	//Загрузка настроек
 	m_pOptions->Load();
@@ -183,7 +199,7 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	CString strConfigVersion;
 	CString strConfigUrl;
 	m_pHostsConfig->Update(strConfigVersion, strConfigUrl);
-	m_pConfigurations->Update();
+;
 	BOOL isConfigListEmpty = (BOOL)(m_pConfigurations->GetNameList()->GetCount() == 0);
 	CheckConfig(isConfigListEmpty, strConfigVersion, strConfigUrl);
 
@@ -197,8 +213,7 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	m_stMemberArea.SetFont(m_pMembersAreaFont, TRUE);
 	m_curHand = LoadCursor(NULL, IDC_HAND);
 
-	//Загрузим список конфигураций
-	UpdateConfigurations();
+
 	
 	//Получение списка сетевых адаптеров
 	m_pNetAdapters->Update();
@@ -211,6 +226,8 @@ BOOL CBuyVPNDlg::OnInitDialog()
 
 	//Применение настроек
 	ApplyOptions();
+
+
 
 	ChangeState(VVC_STATE_DISCONNECTED);
 
@@ -225,7 +242,30 @@ BOOL CBuyVPNDlg::OnInitDialog()
 void CBuyVPNDlg::UpdateConfigurations()
 {
 	m_cobConfiguration.ResetContent();
-	m_pConfigurations->Update();
+	if (m_rbSingleVpn.GetCheck())
+	{
+		m_pOptions->m_strFolder = L"Single";		
+	}
+	else if (m_rbDoubleVpn.GetCheck())
+	{
+		m_pOptions->m_strFolder = L"Double";
+	}
+	else if (m_rbTripleVpn.GetCheck())
+	{
+		m_pOptions->m_strFolder = L"Triple";
+	}
+	else if (m_rbQuadroVpn.GetCheck())
+	{
+		m_pOptions->m_strFolder = L"Quadro";
+	}
+	else if (m_rbPentaVpn.GetCheck())
+	{
+		m_pOptions->m_strFolder = L"Penta";
+	}
+
+	m_pOptions->Save(VCOF_FOLDER);
+	m_pConfigurations->Update(m_pOptions->m_strFolder);
+
 	CList<CString, CString>* pList = m_pConfigurations->GetNameList();
 	POSITION pos = pList->GetHeadPosition();
 	while (pos)
@@ -462,6 +502,23 @@ void CBuyVPNDlg::ApplyOptions()
 		m_edPassword.SetWindowText(m_pOptions->m_strPassword);
 	}
 	m_chbSavePass.SetCheck(m_pOptions->m_fSavePassword ? BST_CHECKED : BST_UNCHECKED);
+
+	if (m_pOptions->m_strFolder.IsEmpty())
+		m_pOptions->m_strFolder = L"Single";
+
+	if (m_pOptions->m_strFolder == L"Single")
+		m_rbSingleVpn.SetCheck(true);
+	else if (m_pOptions->m_strFolder == L"Double")
+		m_rbDoubleVpn.SetCheck(true);
+	else if (m_pOptions->m_strFolder == L"Triple")
+		m_rbTripleVpn.SetCheck(true);
+	else if (m_pOptions->m_strFolder == L"Quadro")
+		m_rbQuadroVpn.SetCheck(true);
+	else if (m_pOptions->m_strFolder == L"Penta")
+		m_rbPentaVpn.SetCheck(true);
+
+	UpdateConfigurations();
+
 	if (m_pOptions->m_strConfiguration.IsEmpty())
 	{
 		if (m_cobConfiguration.GetCount() > 0)
@@ -708,7 +765,8 @@ void CBuyVPNDlg::SetAccountInfo(CString strBalance, CString strExpires)
 
 LRESULT CBuyVPNDlg::OnUpdateAccInfo(WPARAM wParam, LPARAM lParam)
 {
-	m_stExpiresText.SetWindowText(m_strExpires);
+///m_stExpiresText.SetWindowText(m_strExpires);
+	m_stExpiresText.SetWindowText(L"Expires - 2018-12-30 09:17:52");
 	m_stBalanceText.SetWindowText(m_strBalance);
 
 	return TRUE;

@@ -9,6 +9,7 @@
 #define VCOF_CHECKACCOUNT	0x00000040
 #define VCOF_LAUNCHSTART	0x00000080
 #define VCOF_CONFIGVERSION	0x00000100
+#define VCOF_FOLDER			0x00000200
 #define VCOF_ALL			0xFFFFFFFF
 
 class COptions
@@ -24,6 +25,7 @@ public:
 	CString m_strPassword;
 	BOOL m_fSavePassword;
 	CString m_strConfiguration;
+	CString m_strFolder;
 	CString m_strNetAdapter;
 	BOOL m_fCheckAccount;
 	BOOL m_fLaunchOnStart;

@@ -145,14 +145,17 @@
     <ClInclude Include="unzip.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\Users\pepel\Downloads\eng.bmp" />
     <Image Include="res\Bad mark.ico" />
     <Image Include="res\big_green.bmp" />
     <Image Include="res\big_green_hl.bmp" />
+    <Image Include="res\eng.bmp" />
     <Image Include="res\bucks.bmp" />
     <Image Include="res\BuyVPN.ico" />
     <Image Include="res\close.bmp" />
     <Image Include="res\close_hl.bmp" />
     <Image Include="res\connect.bmp" />
+    <Image Include="res\eng_hl.bmp" />
     <Image Include="res\flag.bmp" />
     <Image Include="res\Good mark.ico" />
     <Image Include="res\logo.bmp" />
@@ -160,6 +163,8 @@
     <Image Include="res\mid_blue_hl.bmp" />
     <Image Include="res\min.bmp" />
     <Image Include="res\min_hl.bmp" />
+    <Image Include="res\rus.bmp" />
+    <Image Include="res\rus_hl.bmp" />
     <Image Include="res\tray1.ico" />
     <Image Include="res\tray2.ico" />
     <Image Include="res\tray3.ico" />

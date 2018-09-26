@@ -10,7 +10,7 @@ CConfigurations::~CConfigurations(void)
 {
 }
 
-void CConfigurations::Update()
+void CConfigurations::Update(LPCTSTR lpszType)
 {
 	CString strDir = GetRunningDir();
 	strDir.Append(TEXT("config"));
@@ -18,7 +18,7 @@ void CConfigurations::Update()
 	m_Configurations.RemoveAll();
 	m_Names.RemoveAll();
 
-	SearchConfigFiles(strDir);
+	SearchConfigFiles(strDir, lpszType);
 }
 
 CString CConfigurations::GetPathByName(LPCTSTR lpszConfigName)
@@ -32,7 +32,7 @@ CString CConfigurations::GetPathByName(LPCTSTR lpszConfigName)
 	return strValue;
 }
 
-void CConfigurations::SearchConfigFiles(LPCTSTR lpszDir)
+void CConfigurations::SearchConfigFiles(LPCTSTR lpszDir, LPCTSTR lpszType)
 {
 	HANDLE hFindFile = NULL;
 	WIN32_FIND_DATA ffd;
@@ -54,7 +54,7 @@ void CConfigurations::SearchConfigFiles(LPCTSTR lpszDir)
 					CString strSubDir = lpszDir;
 					strSubDir.AppendChar('\\');
 					strSubDir.Append(ffd.cFileName);
-					SearchConfigFiles(strSubDir);
+					SearchConfigFiles(strSubDir, lpszType);
 				}
 			}
 			else
@@ -69,16 +69,19 @@ void CConfigurations::SearchConfigFiles(LPCTSTR lpszDir)
 					CString strPath;
 					strPath.Format(TEXT("%s\\%s"), lpszDir, ffd.cFileName);
 					CString strName(szName);
-					CString strValue;
-					int n = 1;
-
-					while (m_Configurations.Lookup(GetHash(strName), strValue))
+					if (strName.Find(lpszType) != -1 || strName.Find(L"UNBLOCK") != -1)
 					{
-						strName.Format(TEXT("%s(%d)"), szName, n++);
-					}
+						CString strValue;
+						int n = 1;
 
-					m_Configurations.SetAt(GetHash(strName), strPath);
-					m_Names.AddTail(strName);
+						while (m_Configurations.Lookup(GetHash(strName), strValue))
+						{
+							strName.Format(TEXT("%s(%d)"), szName, n++);
+						}
+
+						m_Configurations.SetAt(GetHash(strName), strPath);
+						m_Names.AddTail(strName);
+					}
 				}
 			}
 		} while (FindNextFile(hFindFile, &ffd));

@@ -48,6 +48,11 @@ BOOL COptions::Load()
 
 		dwSize = sizeof(szBuffer);
 		ZeroMemory(szBuffer, dwSize);
+		RegQueryValueEx(hKey, TEXT("Folder"), 0, NULL, (BYTE*)szBuffer, &dwSize);
+		m_strFolder = szBuffer;
+
+		dwSize = sizeof(szBuffer);
+		ZeroMemory(szBuffer, dwSize);
 		RegQueryValueEx(hKey, TEXT("NetAdapter"), 0, NULL, (BYTE*)szBuffer, &dwSize);
 		m_strNetAdapter = szBuffer;
 
@@ -102,6 +107,11 @@ BOOL COptions::Save(DWORD dwOptionsFlag)
 		if (dwOptionsFlag & VCOF_CONFIGURATION)
 		{
 			RegSetValueEx(hKey, TEXT("Configuration"), 0, REG_SZ, (const BYTE*)(const TCHAR*)m_strConfiguration, (m_strConfiguration.GetLength() + 1)*sizeof(TCHAR));
+		}
+
+		if (dwOptionsFlag & VCOF_FOLDER)
+		{
+			RegSetValueEx(hKey, TEXT("Folder"), 0, REG_SZ, (const BYTE*)(const TCHAR*)m_strFolder, (m_strFolder.GetLength() + 1) * sizeof(TCHAR));
 		}
 
 		if (dwOptionsFlag & VCOF_NETADAPTER)

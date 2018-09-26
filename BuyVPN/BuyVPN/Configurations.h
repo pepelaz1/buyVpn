@@ -6,12 +6,12 @@ public:
 	CConfigurations(void);
 	~CConfigurations(void);
 
-	void Update();
+	void Update(LPCTSTR lpszType);
 	CString GetPathByName(LPCTSTR lpszConfigName);
 	CList<CString,CString>* GetNameList();
 
 private:
-	void SearchConfigFiles(LPCTSTR lpszDir);
+	void SearchConfigFiles(LPCTSTR lpszDir, LPCTSTR lpszType);
 	UINT GetHash(LPCTSTR lpszConfigName);
 
 	CMap<UINT,UINT,CString,CString> m_Configurations;
