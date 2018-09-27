@@ -202,7 +202,8 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	CString strConfigVersion;
 	CString strConfigUrl;
 	m_pHostsConfig->Update(strConfigVersion, strConfigUrl);
-;
+
+	UpdateConfigurations();
 	BOOL isConfigListEmpty = (BOOL)(m_pConfigurations->GetNameList()->GetCount() == 0);
 	CheckConfig(isConfigListEmpty, strConfigVersion, strConfigUrl);
 
@@ -267,6 +268,9 @@ void CBuyVPNDlg::UpdateConfigurations()
 	{
 		m_pOptions->m_strFolder = L"Penta";
 	}
+
+	if (m_pOptions->m_strFolder.IsEmpty())
+		m_pOptions->m_strFolder = L"Single";
 
 	m_pOptions->Save(VCOF_FOLDER);
 	m_pConfigurations->Update(m_pOptions->m_strFolder);
@@ -484,9 +488,9 @@ void CBuyVPNDlg::OnBnClickedButtonConnect()
 
 void CBuyVPNDlg::OnBnClickedButtonExit()
 {
-	//ShowWindow(SW_HIDE);
+	ShowWindow(SW_HIDE);
 	
-	EndDialog(0);
+	//EndDialog(0);
 }
 
 void CBuyVPNDlg::OnBnClickedButtonMin()
@@ -558,7 +562,7 @@ void CBuyVPNDlg::ApplyOptions()
 
 
 	if (m_pOptions->m_strLanguage.IsEmpty())
-		m_pOptions->m_strLanguage = L"Engligh";
+		m_pOptions->m_strLanguage = L"English";
 
 	UpdateUITexts();
 }
@@ -688,7 +692,8 @@ BOOL CBuyVPNDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 void CBuyVPNDlg::OnStnClickedStaticMemberArea()
 {
 	CString strUrl;
-	strUrl.Format(TEXT("https://%s%s?user=%s&passwd=%s"), m_pHostsConfig->GetCurrentHost(), VC_MEMBER_AREA, m_pOptions->m_strUsername, m_pOptions->m_strPassword);
+	strUrl.Format(TEXT("https://%s%s?user=%s&passwd=%s&language=%s"), m_pHostsConfig->GetCurrentHost(), VC_MEMBER_AREA, m_pOptions->m_strUsername, m_pOptions->m_strPassword,
+		m_pOptions->m_strLanguage.MakeLower());
 
 	ShellExecute(NULL, TEXT("open"), strUrl, NULL, NULL, SW_SHOW);
 }
@@ -778,8 +783,8 @@ void CBuyVPNDlg::SetAccountInfo(CString strBalance, CString strExpires)
 
 LRESULT CBuyVPNDlg::OnUpdateAccInfo(WPARAM wParam, LPARAM lParam)
 {
-	m_stExpiresText.SetWindowText(m_langManager.GetText(L"Balance") + m_strBalance);
-	m_stBalanceText.SetWindowText(m_langManager.GetText(L"Expires") + m_strExpires);
+	m_stBalanceText.SetWindowText(m_langManager.GetText(L"Balance") + m_strBalance);
+	m_stExpiresText.SetWindowText(m_langManager.GetText(L"Expires") + m_strExpires);
 	return TRUE;
 }
 
