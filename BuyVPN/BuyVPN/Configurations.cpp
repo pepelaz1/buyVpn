@@ -54,7 +54,8 @@ void CConfigurations::SearchConfigFiles(LPCTSTR lpszDir, LPCTSTR lpszType)
 					CString strSubDir = lpszDir;
 					strSubDir.AppendChar('\\');
 					strSubDir.Append(ffd.cFileName);
-					SearchConfigFiles(strSubDir, lpszType);
+					if (strSubDir.Find(lpszType) != -1)
+						SearchConfigFiles(strSubDir, lpszType);
 				}
 			}
 			else
@@ -69,8 +70,8 @@ void CConfigurations::SearchConfigFiles(LPCTSTR lpszDir, LPCTSTR lpszType)
 					CString strPath;
 					strPath.Format(TEXT("%s\\%s"), lpszDir, ffd.cFileName);
 					CString strName(szName);
-					if (strName.Find(lpszType) != -1 || strName.Find(L"UNBLOCK") != -1)
-					{
+					//if (strName.Find(lpszType) != -1 || strName.Find(L"UNBLOCK") != -1)
+					//{
 						CString strValue;
 						int n = 1;
 
@@ -81,7 +82,7 @@ void CConfigurations::SearchConfigFiles(LPCTSTR lpszDir, LPCTSTR lpszType)
 
 						m_Configurations.SetAt(GetHash(strName), strPath);
 						m_Names.AddTail(strName);
-					}
+					//}
 				}
 			}
 		} while (FindNextFile(hFindFile, &ffd));
