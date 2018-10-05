@@ -137,12 +137,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "InsorgVPN"
             VALUE "FileDescription", "InsorgVPN"
-            VALUE "FileVersion", "1.9.0.0"
+            VALUE "FileVersion", "1.98"
             VALUE "InternalName", "InsorgVPN.exe"
             VALUE "LegalCopyright", "(c) Insorg.  All rights reserved."
             VALUE "OriginalFilename", "InsorgVPN.exe"
             VALUE "ProductName", "InsorgVPN"
-            VALUE "ProductVersion", "1.9.0.1"
+            VALUE "ProductVersion", "1.98"
         END
     END
     BLOCK "VarFileInfo"

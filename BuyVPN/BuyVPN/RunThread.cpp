@@ -209,7 +209,10 @@ VOID CRunThread::Work()
 	if (pi.hThread && pi.hThread != INVALID_HANDLE_VALUE)
 		CloseHandle(pi.hThread);
 	if (pi.hProcess && pi.hProcess != INVALID_HANDLE_VALUE)
+	{
 		CloseHandle(pi.hProcess);
+		m_hOvpnProcess = NULL;
+	}
 
 	if (!fProcessStarted)
 	{
@@ -253,8 +256,10 @@ VOID CRunThread::CreateAuthFile()
 VOID CRunThread::Close()
 {
 	CloseHandle(m_hExitEvent);
-	CloseHandle(m_hThread);
-	CloseHandle(m_hOvpnProcess);
+	if (m_hThread && m_hThread != INVALID_HANDLE_VALUE)
+		CloseHandle(m_hThread);
+	if (m_hOvpnProcess && m_hOvpnProcess != INVALID_HANDLE_VALUE)
+		CloseHandle(m_hOvpnProcess);
 	m_hExitEvent = NULL;
 	m_hThread = NULL;
 	m_hOvpnProcess = NULL;
@@ -275,12 +280,21 @@ BOOL CRunThread::AnalyzeLogLine(LPCSTR szLogLine)
 		fclose(pFile);
 	}
 
-	if (strLogLine.Find("Initialization Sequence Completed") != -1)
+	strLogLine.MakeUpper();
+	//if (strLogLine.Find("Initialization Sequence Completed") != -1)
+	if (strLogLine.Find("INITIALIZATION SEQUENCE COMPLETED") != -1)
 	{
+		WCHAR buf[100];
+		SYSTEMTIME st;
+		GetLocalTime(&st); // Local time
+		wsprintfW(buf, L"Connected at %.2u:%.2u:%.2u ", st.wHour, st.wMinute, st.wSecond); // 24h format
+
+		OutputDebugString(buf);
+		//m_pMainDlg->MessageBox(buf, L"Test", MB_OK);
 		m_pMainDlg->PostMessage(WM_CHANGESTATE, NULL, VVC_STATE_CONNECTED);
 		m_fConnected = TRUE;
 	}
-	else if (strLogLine.Find("restart") != -1)
+	else if (strLogLine.Find("RESTART") != -1 && strLogLine.Find("PING-RESTART") == -1)
 	{
 		return FALSE;
 	}
