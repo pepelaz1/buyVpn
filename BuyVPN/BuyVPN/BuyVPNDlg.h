@@ -24,6 +24,7 @@
 #define WM_NOTIFYICON (WM_USER + 1)
 #define WM_CHANGESTATE (WM_USER + 2)
 #define WM_UPDATEACCINFO (WM_USER + 3)
+#define WM_DISABLENONE (WM_USER + 4)
 
 
 // CBuyVPNDlg dialog
@@ -37,7 +38,7 @@ public:
 	enum { IDD = IDD_BUYVPN_DIALOG };
 
 	void SetAccountInfo(CString strBalance, CString strExpires);
-
+	CLanguageManager *getLangManager();
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -78,6 +79,7 @@ protected:
 	void DeleteNotifyIcon();
 	LRESULT OnTrayIcon(WPARAM wParam, LPARAM lParam);
 	LRESULT OnChangeState(WPARAM wParam, LPARAM lParam);
+	LRESULT OnDisableNone(WPARAM wParam, LPARAM lParam);
 	LRESULT OnUpdateAccInfo(WPARAM wParam, LPARAM lParam);
 	void ApplyOptions();
 	void ChangeState(DWORD dwState);

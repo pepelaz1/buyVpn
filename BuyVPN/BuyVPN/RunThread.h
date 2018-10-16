@@ -36,4 +36,5 @@ private:
 	CHostsConfig* m_pHostConfig;
 	BOOL m_fStopped;
 	BOOL m_fConnected;
+
 };

@@ -191,8 +191,10 @@ VOID CRunThread::Work()
 				if (!m_fStopped && m_fConnected
 					&& !m_pOptions->m_strNetAdapter.IsEmpty() && m_pOptions->m_strNetAdapter.CompareNoCase(TEXT("None")) != 0)
 				{
+					
 					m_pNetAdapters->StopAdapter(m_pOptions->m_strNetAdapter);
-					::MessageBox(m_pMainDlg->GetSafeHwnd(), VC_DISABLE_NETWORK_TEXT, VC_PROGRAM_NAME, MB_OK);
+					::MessageBox(m_pMainDlg->GetSafeHwnd(), m_pMainDlg->getLangManager()->GetText(L"DisableNetwork"), VC_PROGRAM_NAME, MB_OK);
+					//::MessageBox(m_pMainDlg->GetSafeHwnd(), VC_DISABLE_NETWORK_TEXT, VC_PROGRAM_NAME, MB_OK);
 				}
 				
 				break;
@@ -294,8 +296,10 @@ BOOL CRunThread::AnalyzeLogLine(LPCSTR szLogLine)
 		m_pMainDlg->PostMessage(WM_CHANGESTATE, NULL, VVC_STATE_CONNECTED);
 		m_fConnected = TRUE;
 	}
-	else if (strLogLine.Find("RESTART") != -1 && strLogLine.Find("PING-RESTART") == -1)
+	else if ((strLogLine.Find("RESTART") != -1 && strLogLine.Find("PING-RESTART") == -1) 
+			|| (strLogLine.Find("RESTARTING") != -1))
 	{
+		m_pMainDlg->PostMessage(WM_DISABLENONE, NULL, NULL);
 		return FALSE;
 	}
 

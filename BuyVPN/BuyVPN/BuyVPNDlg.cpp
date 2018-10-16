@@ -81,6 +81,7 @@ BEGIN_MESSAGE_MAP(CBuyVPNDlg, CDialog)
 	ON_WM_SETCURSOR()
 	ON_MESSAGE(WM_NOTIFYICON, OnTrayIcon)
 	ON_MESSAGE(WM_CHANGESTATE, OnChangeState)
+	ON_MESSAGE(WM_DISABLENONE, OnDisableNone)
 	ON_MESSAGE(WM_UPDATEACCINFO, OnUpdateAccInfo)
 	ON_BN_CLICKED(IDC_BUTTON_CONNECT, &CBuyVPNDlg::OnBnClickedButtonConnect)
 	ON_BN_CLICKED(IDC_BUTTON_EXIT, &CBuyVPNDlg::OnBnClickedButtonExit)
@@ -282,6 +283,8 @@ void CBuyVPNDlg::UpdateConfigurations()
 		m_cobConfiguration.AddString(pList->GetNext(pos));
 	}
 	m_cobConfiguration.SetCurSel(0);
+
+	OnCbnSelchangeComboConfiguration();
 }
 
 void CBuyVPNDlg::OnDestroy()
@@ -469,6 +472,12 @@ LRESULT CBuyVPNDlg::OnChangeState(WPARAM wParam, LPARAM lParam)
 {
 	ChangeState((DWORD)lParam);
 
+	return TRUE;
+}
+
+LRESULT CBuyVPNDlg::OnDisableNone(WPARAM wParam, LPARAM lParam)
+{
+	MessageBox(m_langManager.GetText(L"DisableNone"));
 	return TRUE;
 }
 
@@ -779,6 +788,11 @@ void CBuyVPNDlg::SetAccountInfo(CString strBalance, CString strExpires)
 	m_strExpires = strExpires;
 
 	PostMessage(WM_UPDATEACCINFO, NULL, NULL);
+}
+
+CLanguageManager *CBuyVPNDlg::getLangManager()
+{
+	return &m_langManager;
 }
 
 LRESULT CBuyVPNDlg::OnUpdateAccInfo(WPARAM wParam, LPARAM lParam)

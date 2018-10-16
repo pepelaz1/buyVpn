@@ -68,6 +68,12 @@ void CLanguageManager::PopulateMaps()
 	m_English.SetAt(L"ShowLog", L"Show log");
 	m_Russian.SetAt(L"ShowLog", L"Показать лог");
 
+	m_English.SetAt(L"DisableNetwork", L"Attention, VPN is disconnected! Selected network disabled.");
+	m_Russian.SetAt(L"DisableNetwork", L"Внимание, VPN разъединен! Выбранная сеть отлючена");
+
+	m_English.SetAt(L"DisableNone", L"Attention, VPN is disconnected!");
+	m_Russian.SetAt(L"DisableNone", L"Внимание, VPN разъединен!");
+	
 
 	m_pCurrentMap = &m_English;
 }
