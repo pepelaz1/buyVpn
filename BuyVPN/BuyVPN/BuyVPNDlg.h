@@ -24,8 +24,6 @@
 #define WM_NOTIFYICON (WM_USER + 1)
 #define WM_CHANGESTATE (WM_USER + 2)
 #define WM_UPDATEACCINFO (WM_USER + 3)
-#define WM_DISABLENONE (WM_USER + 4)
-
 
 // CBuyVPNDlg dialog
 class CBuyVPNDlg : public CDialog
@@ -79,7 +77,6 @@ protected:
 	void DeleteNotifyIcon();
 	LRESULT OnTrayIcon(WPARAM wParam, LPARAM lParam);
 	LRESULT OnChangeState(WPARAM wParam, LPARAM lParam);
-	LRESULT OnDisableNone(WPARAM wParam, LPARAM lParam);
 	LRESULT OnUpdateAccInfo(WPARAM wParam, LPARAM lParam);
 	void ApplyOptions();
 	void ChangeState(DWORD dwState);

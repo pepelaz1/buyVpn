@@ -81,7 +81,6 @@ BEGIN_MESSAGE_MAP(CBuyVPNDlg, CDialog)
 	ON_WM_SETCURSOR()
 	ON_MESSAGE(WM_NOTIFYICON, OnTrayIcon)
 	ON_MESSAGE(WM_CHANGESTATE, OnChangeState)
-	ON_MESSAGE(WM_DISABLENONE, OnDisableNone)
 	ON_MESSAGE(WM_UPDATEACCINFO, OnUpdateAccInfo)
 	ON_BN_CLICKED(IDC_BUTTON_CONNECT, &CBuyVPNDlg::OnBnClickedButtonConnect)
 	ON_BN_CLICKED(IDC_BUTTON_EXIT, &CBuyVPNDlg::OnBnClickedButtonExit)
@@ -475,12 +474,6 @@ LRESULT CBuyVPNDlg::OnChangeState(WPARAM wParam, LPARAM lParam)
 	return TRUE;
 }
 
-LRESULT CBuyVPNDlg::OnDisableNone(WPARAM wParam, LPARAM lParam)
-{
-	MessageBox(m_langManager.GetText(L"DisableNone"));
-	return TRUE;
-}
-
 void CBuyVPNDlg::OnBnClickedButtonConnect()
 {
 	if (m_dwState == VVC_STATE_DISCONNECTED)
@@ -711,8 +704,11 @@ void CBuyVPNDlg::OnStnClickedStaticMemberArea()
 void CBuyVPNDlg::OnCbnSelchangeComboConfiguration()
 {
 	int iSel = m_cobConfiguration.GetCurSel();
-	m_cobConfiguration.GetLBText(iSel, m_pOptions->m_strConfiguration);
-	m_pOptions->Save(VCOF_CONFIGURATION);
+	if (iSel != -1)
+	{
+		m_cobConfiguration.GetLBText(iSel, m_pOptions->m_strConfiguration);
+		m_pOptions->Save(VCOF_CONFIGURATION);
+	}
 }
 
 void CBuyVPNDlg::OnBnClickedButtonEdit()
