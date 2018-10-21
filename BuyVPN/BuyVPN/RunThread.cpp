@@ -300,12 +300,23 @@ BOOL CRunThread::AnalyzeLogLine(LPCSTR szLogLine)
 	else if ((strLogLine.Find("RESTART") != -1 && strLogLine.Find("PING-RESTART") == -1) 
 			|| (strLogLine.Find("RESTARTING") != -1))
 	{		
-		m_pMainDlg->PostMessage(WM_CHANGESTATE, NULL, VVC_STATE_DISCONNECTED);
+		//if (!m_fStopped && m_fConnected
+		//	&& !m_pOptions->m_strNetAdapter.IsEmpty() && m_pOptions->m_strNetAdapter.CompareNoCase(TEXT("None")) != 0)
+		//{
 
-		if (m_pOptions->m_strNetAdapter == L"None")
+		//	m_pNetAdapters->StopAdapter(m_pOptions->m_strNetAdapter);
+			//::MessageBox(m_pMainDlg->GetSafeHwnd(), m_pMainDlg->getLangManager()->GetText(L"DisableNetwork"), VC_PROGRAM_NAME, MB_OK);
+			//::MessageBox(m_pMainDlg->GetSafeHwnd(), VC_DISABLE_NETWORK_TEXT, VC_PROGRAM_NAME, MB_OK);
+	//	}
+		//TerminateProcess(m_hOvpnProcess, -1);
+		m_pMainDlg->PostMessage(WM_CHANGESTATE, NULL, VVC_STATE_BROKEN);
+		//Stop();
+		
+
+	/*	if (m_pOptions->m_strNetAdapter == L"None")
 			::MessageBox(m_pMainDlg->GetSafeHwnd(), m_pMainDlg->getLangManager()->GetText(L"DisableNone"), VC_PROGRAM_NAME, MB_OK);
 		else
-			::MessageBox(m_pMainDlg->GetSafeHwnd(), m_pMainDlg->getLangManager()->GetText(L"DisableNetwork"), VC_PROGRAM_NAME, MB_OK);
+			::MessageBox(m_pMainDlg->GetSafeHwnd(), m_pMainDlg->getLangManager()->GetText(L"DisableNetwork"), VC_PROGRAM_NAME, MB_OK);*/
 		return FALSE;
 	}
 
