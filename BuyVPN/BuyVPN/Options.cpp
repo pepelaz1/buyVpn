@@ -37,6 +37,11 @@ BOOL COptions::Load()
 		m_strPassword = DecodePassword(szBuffer);
 
 		dwSize = sizeof(DWORD);
+		dwValue = m_fTariffLite ? 1 : 0;
+		RegQueryValueEx(hKey, TEXT("TariffLite"), 0, NULL, (BYTE*)&dwValue, &dwSize);
+		m_fTariffLite = dwValue;
+
+		dwSize = sizeof(DWORD);
 		dwValue = m_fSavePassword ? 1 : 0;
 		RegQueryValueEx(hKey, TEXT("SavePass"), 0, NULL, (BYTE*)&dwValue, &dwSize);
 		m_fSavePassword = dwValue;
@@ -104,6 +109,11 @@ BOOL COptions::Save(DWORD dwOptionsFlag)
 			RegSetValueEx(hKey, TEXT("Password"), 0, REG_SZ, (const BYTE*)szBuffer, (m_strPassword.GetLength() + 1)*sizeof(TCHAR));
 		}
 		
+		if (dwOptionsFlag & VCOF_TARIFF_LITE)
+		{
+			RegSetValueEx(hKey, TEXT("TariffLite"), 0, REG_DWORD, (const BYTE*)&m_fTariffLite, sizeof(DWORD));
+		}
+
 		if (dwOptionsFlag & VCOF_SAVEPASS)
 		{
 			RegSetValueEx(hKey, TEXT("SavePass"), 0, REG_DWORD, (const BYTE*)&m_fSavePassword, sizeof(DWORD));

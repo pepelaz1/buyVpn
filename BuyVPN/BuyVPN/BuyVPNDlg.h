@@ -57,6 +57,7 @@ protected:
 	afx_msg void OnBnClickedButtonMin();
 	afx_msg void OnEnChangeEditLogin();
 	afx_msg void OnEnChangeEditPassword();
+	afx_msg void OnBnClickedCheckTariffLite();
 	afx_msg void OnBnClickedCheckSavelogin();
 	afx_msg void OnBnClickedCheckAccountState();
 	afx_msg void OnBnClickedCheckLaunchOnstart();
@@ -96,6 +97,7 @@ protected:
 	CEdit m_edUsername;
 	CEdit m_edPassword;
 	CColorCheck m_chbSavePass;
+	CColorCheck m_chbTariffLite;
 	CComboBox m_cobConfiguration;
 	CComboBox m_cobNetAdapter;
 	CColorCheck m_chbCheckAccount;
@@ -125,7 +127,6 @@ protected:
 	CStatic m_stBalanceText;
 	CStatic m_stExpiresText;
 	CButton m_rbSingleVpn;
-
 	CButton m_rbDoubleVpn;
 	CButton m_rbTripleVpn;
 	CButton m_rbQuadroVpn;

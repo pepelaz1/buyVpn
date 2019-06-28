@@ -20,6 +20,10 @@ void CLanguageManager::PopulateMaps()
 	m_English.SetAt(L"Password", L"Password:");
 	m_Russian.SetAt(L"Password", L"Пароль:");
 
+	m_English.SetAt(L"TariffLite", L"Tariff Lite");
+	m_Russian.SetAt(L"TariffLite", L"Тариф Lite");
+
+
 	m_English.SetAt(L"SaveLogin", L"Remember login and password");
 	m_Russian.SetAt(L"SaveLogin", L"Запомнить логин и пароль");
 

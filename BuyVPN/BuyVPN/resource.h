@@ -39,6 +39,7 @@
 #define IDC_CHECK_ACCOUNT_STATE         1008
 #define IDC_CHECK_LAUNCH_ONSTART        1009
 #define IDC_CHECK_ACCOUNT_STATE2        1009
+#define IDC_CHECK_TARIFF_LITE           1009
 #define IDC_CHECK_ACCOUNT_STATE3        1010
 #define IDC_BUTTON_CONNECT              1011
 #define ID_BUTTON_EXIT                  1012
@@ -76,7 +77,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        157
 #define _APS_NEXT_COMMAND_VALUE         32776
-#define _APS_NEXT_CONTROL_VALUE         1028
+#define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

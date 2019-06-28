@@ -1,5 +1,5 @@
 !define PRODUCT_NAME "InsorgVPN"
-!define PRODUCT_VERSION "2.00"
+!define PRODUCT_VERSION "2.02"
 !define PRODUCT_PUBLISHER "InsorgVPN"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\InsorgVPN.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"

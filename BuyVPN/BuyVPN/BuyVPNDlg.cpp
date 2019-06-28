@@ -44,6 +44,7 @@ void CBuyVPNDlg::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT_LOGIN, m_edUsername);
 	DDX_Control(pDX, IDC_EDIT_PASSWORD, m_edPassword);
+	DDX_Control(pDX, IDC_CHECK_TARIFF_LITE, m_chbTariffLite);
 	DDX_Control(pDX, IDC_CHECK_SAVELOGIN, m_chbSavePass);
 	DDX_Control(pDX, IDC_COMBO_CONFIGURATION, m_cobConfiguration);
 	DDX_Control(pDX, IDC_COMBO_NETWORK, m_cobNetAdapter);
@@ -86,6 +87,7 @@ BEGIN_MESSAGE_MAP(CBuyVPNDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_EXIT, &CBuyVPNDlg::OnBnClickedButtonExit)
 	ON_EN_CHANGE(IDC_EDIT_LOGIN, &CBuyVPNDlg::OnEnChangeEditLogin)
 	ON_EN_CHANGE(IDC_EDIT_PASSWORD, &CBuyVPNDlg::OnEnChangeEditPassword)
+	ON_BN_CLICKED(IDC_CHECK_TARIFF_LITE, &CBuyVPNDlg::OnBnClickedCheckTariffLite)
 	ON_BN_CLICKED(IDC_CHECK_SAVELOGIN, &CBuyVPNDlg::OnBnClickedCheckSavelogin)
 	ON_BN_CLICKED(IDC_CHECK_ACCOUNT_STATE, &CBuyVPNDlg::OnBnClickedCheckAccountState)
 	//ON_BN_CLICKED(IDC_CHECK_LAUNCH_ONSTART, &CBuyVPNDlg::OnBnClickedCheckLaunchOnstart)
@@ -512,6 +514,7 @@ void CBuyVPNDlg::ApplyOptions()
 		m_edUsername.SetWindowText(m_pOptions->m_strUsername);
 		m_edPassword.SetWindowText(m_pOptions->m_strPassword);
 	}
+	m_chbTariffLite.SetCheck(m_pOptions->m_fTariffLite ? BST_CHECKED : BST_UNCHECKED);
 	m_chbSavePass.SetCheck(m_pOptions->m_fSavePassword ? BST_CHECKED : BST_UNCHECKED);
 
 	if (m_pOptions->m_strFolder.IsEmpty())
@@ -591,6 +594,13 @@ void CBuyVPNDlg::OnEnChangeEditPassword()
 	{
 		m_pOptions->Save(VCOF_PASSWORD);
 	}
+}
+
+void CBuyVPNDlg::OnBnClickedCheckTariffLite()
+{
+	//m_SavePass.SetCheck(!(BOOL)m_SavePass.GetCheck());
+	m_pOptions->m_fTariffLite = (BOOL)(m_chbTariffLite.GetCheck() == BST_CHECKED);
+	m_pOptions->Save(VCOF_TARIFF_LITE);
 }
 
 void CBuyVPNDlg::OnBnClickedCheckSavelogin()
@@ -976,6 +986,7 @@ void CBuyVPNDlg::UpdateUITexts()
 	m_stUsername.SetWindowText(m_langManager.GetText(L"Login"));
 	m_stPassword.SetWindowText(m_langManager.GetText(L"Password"));
 	m_chbSavePass.SetWindowText(m_langManager.GetText(L"SaveLogin"));
+	m_chbTariffLite.SetWindowText(m_langManager.GetText(L"TariffLite"));
 	m_chbSavePass.Invalidate();
 	m_stMemberArea.SetWindowText(m_langManager.GetText(L"MemberArea"));
 	m_stSelectConfiguration.SetWindowText(m_langManager.GetText(L"SelectConfiguration"));

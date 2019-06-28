@@ -11,6 +11,7 @@
 #define VCOF_CONFIGVERSION	0x00000100
 #define VCOF_FOLDER			0x00000200
 #define VCOF_LANGUAGE		0x00000400
+#define VCOF_TARIFF_LITE	0x00000800
 #define VCOF_ALL			0xFFFFFFFF
 
 class COptions
@@ -24,6 +25,7 @@ public:
 
 	CString m_strUsername;
 	CString m_strPassword;
+	BOOL m_fTariffLite;
 	BOOL m_fSavePassword;
 	CString m_strConfiguration;
 	CString m_strFolder;
