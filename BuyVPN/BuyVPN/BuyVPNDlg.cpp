@@ -283,7 +283,10 @@ void CBuyVPNDlg::UpdateConfigurations()
 	{
 		m_cobConfiguration.AddString(pList->GetNext(pos));
 	}
-	m_cobConfiguration.SetCurSel(0);
+	//m_cobConfiguration.SetCurSel(0);
+
+	int sel = m_cobConfiguration.FindString(0, m_pOptions->m_strConfiguration);
+	m_cobConfiguration.SetCurSel(sel);
 
 	OnCbnSelchangeComboConfiguration();
 }
