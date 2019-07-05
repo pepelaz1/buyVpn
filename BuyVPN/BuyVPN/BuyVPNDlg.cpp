@@ -223,7 +223,7 @@ BOOL CBuyVPNDlg::OnInitDialog()
 
 	
 	//Получение списка сетевых адаптеров
-	PopulateAdapters();
+	PopulateAdapters(TRUE);
 
 	
 
@@ -782,60 +782,59 @@ void CBuyVPNDlg::ChangeState(DWORD dwState)
 
 	switch (dwState)
 	{
-	case VVC_STATE_DISCONNECTED:
-	{
-		m_btnConnect.SetWindowText(m_langManager.GetText(L"Connect"));
-		m_btnConnect.EnableWindow(TRUE);
-		m_stStatusText.SetWindowText(m_langManager.GetText(L"Disconnected"));
-		ModifyNotifyIcon(FALSE);
-		break;
-	}
-	case VVC_STATE_STARTING:
-	{
-		m_btnConnect.SetWindowText(m_langManager.GetText(L"Disconnect"));
-		m_btnConnect.EnableWindow(FALSE);
-		m_stStatusText.SetWindowText(m_langManager.GetText(L"Connecting"));
-		break;
-	}
-	case VVC_STATE_CONNECTING:
-	{
-		m_btnConnect.SetWindowText(m_langManager.GetText(L"Disconnect"));
-		m_btnConnect.EnableWindow(TRUE);
-		m_stStatusText.SetWindowText(m_langManager.GetText(L"Connecting"));
-		break;
-	}
-	case VVC_STATE_CONNECTED:
-	{
-		m_btnConnect.SetWindowText(m_langManager.GetText(L"Disconnect"));
-		m_btnConnect.EnableWindow(TRUE);
-		m_stStatusText.SetWindowText(m_langManager.GetText(L"Connected"));
-		ModifyNotifyIcon(TRUE);
-		break;
-	}
-	case VVC_STATE_DISCONNECTING:
-	{
-		m_btnConnect.SetWindowText(m_langManager.GetText(L"Connect"));
-		m_btnConnect.EnableWindow(FALSE);
-		m_stStatusText.SetWindowText(m_langManager.GetText(L"Disconnecting"));
-		ModifyNotifyIcon(FALSE);
-		break;
-	}
-	case VVC_STATE_BROKEN:
-	{
-		m_btnConnect.SetWindowText(m_langManager.GetText(L"Connect"));
-		m_btnConnect.EnableWindow(TRUE);
-		m_stStatusText.SetWindowText(m_langManager.GetText(L"Disconnected"));
-		ModifyNotifyIcon(FALSE);
+		case VVC_STATE_DISCONNECTED:
+		{
+			m_btnConnect.SetWindowText(m_langManager.GetText(L"Connect"));
+			m_btnConnect.EnableWindow(TRUE);
+			m_stStatusText.SetWindowText(m_langManager.GetText(L"Disconnected"));
+			ModifyNotifyIcon(FALSE);
+			break;
+		}
+		case VVC_STATE_STARTING:
+		{
+			m_btnConnect.SetWindowText(m_langManager.GetText(L"Disconnect"));
+			m_btnConnect.EnableWindow(FALSE);
+			m_stStatusText.SetWindowText(m_langManager.GetText(L"Connecting"));
+			break;
+		}
+		case VVC_STATE_CONNECTING:
+		{
+			m_btnConnect.SetWindowText(m_langManager.GetText(L"Disconnect"));
+			m_btnConnect.EnableWindow(TRUE);
+			m_stStatusText.SetWindowText(m_langManager.GetText(L"Connecting"));
+			break;
+		}
+		case VVC_STATE_CONNECTED:
+		{
+			m_btnConnect.SetWindowText(m_langManager.GetText(L"Disconnect"));
+			m_btnConnect.EnableWindow(TRUE);
+			m_stStatusText.SetWindowText(m_langManager.GetText(L"Connected"));
+			ModifyNotifyIcon(TRUE);
+			break;
+		}
+		case VVC_STATE_DISCONNECTING:
+		{
+			m_btnConnect.SetWindowText(m_langManager.GetText(L"Connect"));
+			m_btnConnect.EnableWindow(FALSE);
+			m_stStatusText.SetWindowText(m_langManager.GetText(L"Disconnecting"));
+			ModifyNotifyIcon(FALSE);
+			break;
+		}
+		case VVC_STATE_BROKEN:
+		{
+			m_btnConnect.SetWindowText(m_langManager.GetText(L"Connect"));
+			m_btnConnect.EnableWindow(TRUE);
+			m_stStatusText.SetWindowText(m_langManager.GetText(L"Disconnected"));
+			ModifyNotifyIcon(FALSE);
 
-		m_pOptions->Save(VCOF_NETADAPTER);
-		if (m_pOptions->m_strNetAdapter == L"None")
-			MessageBox(getLangManager()->GetText(L"DisableNone"), VC_PROGRAM_NAME, MB_OK | MB_SYSTEMMODAL);
-		else
-			MessageBox(getLangManager()->GetText(L"DisableNetwork"), VC_PROGRAM_NAME, MB_OK | MB_SYSTEMMODAL);
-
-		PopulateAdapters(TRUE);
-		break;
-	}
+			m_pOptions->Save(VCOF_NETADAPTER);
+			if (m_pOptions->m_strNetAdapter == L"None")
+				MessageBox(getLangManager()->GetText(L"DisableNone"), VC_PROGRAM_NAME, MB_OK | MB_SYSTEMMODAL);
+			else
+				MessageBox(getLangManager()->GetText(L"DisableNetwork"), VC_PROGRAM_NAME, MB_OK | MB_SYSTEMMODAL);
+		
+			break;
+		}
 	}
 }
 
