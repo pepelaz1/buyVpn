@@ -86,6 +86,7 @@ protected:
 	HICON LoadSmIcon(DWORD dwResId);
 	void CheckConfig(BOOL fUpdateAlways, CString strVersion, CString strUrl);
 	void UpdateConfigurations();
+	void UpdateChainsVisibility();
 	void UpdateUITexts();
 
 

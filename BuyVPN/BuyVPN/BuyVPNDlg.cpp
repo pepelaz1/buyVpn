@@ -206,6 +206,7 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	m_pHostsConfig->Update(strConfigVersion, strConfigUrl);
 
 	UpdateConfigurations();
+
 	BOOL isConfigListEmpty = (BOOL)(m_pConfigurations->GetNameList()->GetCount() == 0);
 	CheckConfig(isConfigListEmpty, strConfigVersion, strConfigUrl);
 
@@ -246,33 +247,53 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
+void CBuyVPNDlg::UpdateChainsVisibility()
+{
+	m_stVpnChains.ShowWindow(m_pOptions->m_fTariffLite ? SW_HIDE : SW_SHOW);
+	m_rbSingleVpn.ShowWindow(m_pOptions->m_fTariffLite ? SW_HIDE : SW_SHOW);
+	m_rbDoubleVpn.ShowWindow(m_pOptions->m_fTariffLite ? SW_HIDE : SW_SHOW);
+	m_rbTripleVpn.ShowWindow(m_pOptions->m_fTariffLite ? SW_HIDE : SW_SHOW);
+	m_rbQuadroVpn.ShowWindow(m_pOptions->m_fTariffLite ? SW_HIDE : SW_SHOW);
+	m_rbPentaVpn.ShowWindow(m_pOptions->m_fTariffLite ? SW_HIDE : SW_SHOW);
+}
+
 
 void CBuyVPNDlg::UpdateConfigurations()
 {
 	m_cobConfiguration.ResetContent();
-	if (m_rbSingleVpn.GetCheck())
+	if (m_pOptions->m_fTariffLite)
 	{
-		m_pOptions->m_strFolder = L"Single";		
+		m_pOptions->m_strFolder = L"Lite";
 	}
-	else if (m_rbDoubleVpn.GetCheck())
+	else
 	{
-		m_pOptions->m_strFolder = L"Double";
-	}
-	else if (m_rbTripleVpn.GetCheck())
-	{
-		m_pOptions->m_strFolder = L"Triple";
-	}
-	else if (m_rbQuadroVpn.GetCheck())
-	{
-		m_pOptions->m_strFolder = L"Quadro";
-	}
-	else if (m_rbPentaVpn.GetCheck())
-	{
-		m_pOptions->m_strFolder = L"Penta";
-	}
+		if (m_rbSingleVpn.GetCheck())
+		{
+			m_pOptions->m_strFolder = L"Single";
+		}
+		else if (m_rbDoubleVpn.GetCheck())
+		{
+			m_pOptions->m_strFolder = L"Double";
+		}
+		else if (m_rbTripleVpn.GetCheck())
+		{
+			m_pOptions->m_strFolder = L"Triple";
+		}
+		else if (m_rbQuadroVpn.GetCheck())
+		{
+			m_pOptions->m_strFolder = L"Quadro";
+		}
+		else if (m_rbPentaVpn.GetCheck())
+		{
+			m_pOptions->m_strFolder = L"Penta";
+		}
 
-	if (m_pOptions->m_strFolder.IsEmpty())
-		m_pOptions->m_strFolder = L"Single";
+		if (m_pOptions->m_strFolder.IsEmpty() || m_pOptions->m_strFolder == L"Lite")
+		{
+			m_pOptions->m_strFolder = L"Single";
+			m_rbSingleVpn.SetCheck(true);
+		}
+	}
 
 	m_pOptions->Save(VCOF_FOLDER);
 	m_pConfigurations->Update(m_pOptions->m_strFolder);
@@ -286,8 +307,12 @@ void CBuyVPNDlg::UpdateConfigurations()
 	//m_cobConfiguration.SetCurSel(0);
 
 	int sel = m_cobConfiguration.FindString(0, m_pOptions->m_strConfiguration);
+	if (sel == -1)
+		sel = 0;
+
 	m_cobConfiguration.SetCurSel(sel);
 
+	UpdateChainsVisibility();
 	OnCbnSelchangeComboConfiguration();
 }
 
@@ -563,7 +588,8 @@ void CBuyVPNDlg::ApplyOptions()
 	}
 	else
 	{
-		m_cobNetAdapter.SelectString(0, m_pOptions->m_strNetAdapter);
+		
+		m_cobNetAdapter.SelectString(-1, m_pOptions->m_strNetAdapter);
 	}
 	m_chbCheckAccount.SetCheck(m_pOptions->m_fCheckAccount ? BST_CHECKED : BST_UNCHECKED);
 	m_chbLaunchOnStart.SetCheck(m_pOptions->m_fLaunchOnStart ? BST_CHECKED : BST_UNCHECKED);
@@ -602,8 +628,10 @@ void CBuyVPNDlg::OnEnChangeEditPassword()
 void CBuyVPNDlg::OnBnClickedCheckTariffLite()
 {
 	//m_SavePass.SetCheck(!(BOOL)m_SavePass.GetCheck());
+
 	m_pOptions->m_fTariffLite = (BOOL)(m_chbTariffLite.GetCheck() == BST_CHECKED);
 	m_pOptions->Save(VCOF_TARIFF_LITE);
+	UpdateConfigurations();
 }
 
 void CBuyVPNDlg::OnBnClickedCheckSavelogin()
@@ -791,6 +819,7 @@ void CBuyVPNDlg::ChangeState(DWORD dwState)
 		m_stStatusText.SetWindowText(m_langManager.GetText(L"Disconnected"));
 		ModifyNotifyIcon(FALSE);
 
+		m_pOptions->Save(VCOF_NETADAPTER);
 		if (m_pOptions->m_strNetAdapter == L"None")
 			MessageBox(getLangManager()->GetText(L"DisableNone"), VC_PROGRAM_NAME, MB_OK | MB_SYSTEMMODAL);
 		else
@@ -989,8 +1018,9 @@ void CBuyVPNDlg::UpdateUITexts()
 	m_stUsername.SetWindowText(m_langManager.GetText(L"Login"));
 	m_stPassword.SetWindowText(m_langManager.GetText(L"Password"));
 	m_chbSavePass.SetWindowText(m_langManager.GetText(L"SaveLogin"));
-	m_chbTariffLite.SetWindowText(m_langManager.GetText(L"TariffLite"));
 	m_chbSavePass.Invalidate();
+	m_chbTariffLite.SetWindowText(m_langManager.GetText(L"TariffLite"));
+	m_chbTariffLite.Invalidate();
 	m_stMemberArea.SetWindowText(m_langManager.GetText(L"MemberArea"));
 	m_stSelectConfiguration.SetWindowText(m_langManager.GetText(L"SelectConfiguration"));
 	m_stNetAdapter.SetWindowText(m_langManager.GetText(L"NetAdapter"));
