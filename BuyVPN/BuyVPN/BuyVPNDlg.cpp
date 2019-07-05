@@ -223,13 +223,9 @@ BOOL CBuyVPNDlg::OnInitDialog()
 
 	
 	//Получение списка сетевых адаптеров
-	m_pNetAdapters->Update();
-	CList<CString, CString> *pList = m_pNetAdapters->GetNameList();
-	POSITION pos = pList->GetHeadPosition();
-	while (pos)
-	{
-		m_cobNetAdapter.AddString(pList->GetNext(pos));
-	}
+	PopulateAdapters();
+
+	
 
 	//Применение настроек
 	ApplyOptions();
@@ -245,6 +241,18 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	UpdateUITexts();
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+void CBuyVPNDlg::PopulateAdapters(BOOL noTap)
+{
+	m_pNetAdapters->Update(noTap);
+	m_cobNetAdapter.Clear();
+	CList<CString, CString> *pList = m_pNetAdapters->GetNameList();
+	POSITION pos = pList->GetHeadPosition();
+	while (pos)
+	{
+		m_cobNetAdapter.AddString(pList->GetNext(pos));
+	}
 }
 
 void CBuyVPNDlg::UpdateChainsVisibility()
@@ -825,6 +833,7 @@ void CBuyVPNDlg::ChangeState(DWORD dwState)
 		else
 			MessageBox(getLangManager()->GetText(L"DisableNetwork"), VC_PROGRAM_NAME, MB_OK | MB_SYSTEMMODAL);
 
+		PopulateAdapters(TRUE);
 		break;
 	}
 	}

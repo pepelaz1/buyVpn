@@ -88,6 +88,7 @@ protected:
 	void UpdateConfigurations();
 	void UpdateChainsVisibility();
 	void UpdateUITexts();
+	void PopulateAdapters(BOOL noTap = FALSE);
 
 
 	HICON m_hIcon;

@@ -13,15 +13,15 @@ CNetAdapters::~CNetAdapters(void)
 {
 }
 
-void CNetAdapters::Update()
+void CNetAdapters::Update(BOOL noTap)
 {
 	m_Names.RemoveAll();
 	m_Names.AddHead(CString(TEXT("None")));
-	EnumNetConnections();
+	EnumNetConnections(noTap);
 	EnumRasConnections();
 }
 
-void CNetAdapters::EnumNetConnections()
+void CNetAdapters::EnumNetConnections(BOOL noTap)
 {
 	HRESULT hr = E_FAIL;
 	INetConnectionManager* pNet;
@@ -42,8 +42,11 @@ void CNetAdapters::EnumNetConnections()
 			pConn->GetProperties(&pProps);
 
 			CString strName(pProps->pszwName);
-
-			m_Names.AddTail(strName);
+			CString strDeviceName(pProps->pszwDeviceName);
+			if (!noTap || strDeviceName.Find(L"TAP") == -1) {
+				m_Names.AddTail(strName);
+			}
+			
 
 			CoTaskMemFree(pProps->pszwName);
 			CoTaskMemFree(pProps->pszwDeviceName);
