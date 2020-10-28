@@ -1,9 +1,9 @@
 #pragma once
 
 
-#define VC_PROGRAM_NAME					TEXT("InsorgVPN")
-#define VC_CURRENT_VERSION				TEXT("2.02")
-#define VC_DEFAULT_HOST					TEXT("185.244.150.199")
+#define VC_PROGRAM_NAME					TEXT("Safe-Inet VPN")
+#define VC_CURRENT_VERSION				TEXT("2.03")
+#define VC_DEFAULT_HOST					TEXT("178.209.46.145")
 #define VC_SCRIPT_ADDRESS				TEXT("/upd.php")
 #define VC_MEMBER_AREA					TEXT("/member/index.cgi")
 #define VC_AUTH_ADDRESS					TEXT("/member/index.cgi")

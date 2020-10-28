@@ -108,6 +108,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -149,9 +150,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Users\pepel\Downloads\eng.bmp" />
+    <Image Include="..\..\..\..\Users\pepel\Downloads\Лого в программу.png" />
     <Image Include="res\Bad mark.ico" />
     <Image Include="res\big_green.bmp" />
     <Image Include="res\big_green_hl.bmp" />
+    <Image Include="res\bitmap3.bmp" />
     <Image Include="res\eng.bmp" />
     <Image Include="res\bucks.bmp" />
     <Image Include="res\BuyVPN.ico" />
@@ -161,7 +164,9 @@
     <Image Include="res\eng_hl.bmp" />
     <Image Include="res\flag.bmp" />
     <Image Include="res\Good mark.ico" />
+    <Image Include="res\icon1.ico" />
     <Image Include="res\logo.bmp" />
+    <Image Include="res\logonew.bmp" />
     <Image Include="res\mid_blue.bmp" />
     <Image Include="res\mid_blue_hl.bmp" />
     <Image Include="res\min.bmp" />

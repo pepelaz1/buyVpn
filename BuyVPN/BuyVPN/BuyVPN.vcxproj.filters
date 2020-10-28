@@ -181,6 +181,18 @@
     <Image Include="res\rus_hl.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\Users\pepel\Downloads\Лого в программу.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\logonew.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BuyVPN.rc">

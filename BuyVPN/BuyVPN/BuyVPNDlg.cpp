@@ -304,7 +304,7 @@ void CBuyVPNDlg::UpdateConfigurations()
 	}
 
 	m_pOptions->Save(VCOF_FOLDER);
-	m_pConfigurations->Update(m_pOptions->m_strFolder);
+	m_pConfigurations->Update(m_pOptions->m_strFolder, m_pOptions->m_strLanguage);
 
 	CList<CString, CString>* pList = m_pConfigurations->GetNameList();
 	POSITION pos = pList->GetHeadPosition();
@@ -1007,6 +1007,7 @@ void CBuyVPNDlg::OnBnClickedButtonEnglish()
 {
 	m_pOptions->m_strLanguage = L"English";
 	UpdateUITexts();
+	UpdateConfigurations();
 }
 
 
@@ -1014,6 +1015,7 @@ void CBuyVPNDlg::OnBnClickedButtonRussian()
 {
 	m_pOptions->m_strLanguage = L"Russian";
 	UpdateUITexts();
+	UpdateConfigurations();
 }
 
 void CBuyVPNDlg::UpdateUITexts()

@@ -15,7 +15,6 @@
 #define IDB_MIDBLUE                     139
 #define IDB_MIDBLUEHL                   140
 #define IDB_BITMAP2                     141
-#define IDB_LOGO                        141
 #define IDB_CLOSE                       142
 #define IDB_CLOSEHL                     143
 #define IDB_MIN                         144
@@ -28,6 +27,8 @@
 #define IDB_ENGHL                       154
 #define IDB_RUS                         155
 #define IDB_RUSHL                       156
+#define IDB_BITMAP3                     162
+#define IDB_LOGONEW                     162
 #define IDC_EDIT_LOGIN                  1000
 #define IDC_EDIT_PASSWORD               1001
 #define IDC_COMBO_CONFIGURATION         1002
@@ -75,7 +76,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        157
+#define _APS_NEXT_RESOURCE_VALUE        163
 #define _APS_NEXT_COMMAND_VALUE         32776
 #define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           101

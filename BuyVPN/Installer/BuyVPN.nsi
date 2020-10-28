@@ -1,10 +1,10 @@
-!define PRODUCT_NAME "InsorgVPN"
-!define PRODUCT_VERSION "2.02"
-!define PRODUCT_PUBLISHER "InsorgVPN"
-!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\InsorgVPN.exe"
+!define PRODUCT_NAME "Safe-Inet VPN"
+!define PRODUCT_VERSION "2.03"
+!define PRODUCT_PUBLISHER "Safe-Inet VPN"
+!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Safe-Inet VPN.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
-!define COMPANY_NAME "InsorgVPN"
+!define COMPANY_NAME "Safe-Inet VPN"
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -12,7 +12,7 @@
 ; MUI Settings
 !define MUI_ICON   "..\BuyVPN\res\BuyVPN.ico"
 ;!define MUI_ICON   "..\BuyVPN\res\BuyVPN.ico"
-!define MUI_WELCOMEPAGE_TITLE "InsorgVPN Client installation"
+!define MUI_WELCOMEPAGE_TITLE "Safe-Inet VPN Client installation"
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
@@ -33,7 +33,7 @@
 !include WinVer.nsh
 
 Name "${PRODUCT_NAME}"
-OutFile "InsorgVPN_Install_${PRODUCT_VERSION}.exe"
+OutFile "Safe_Inet_VPN_Install_${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES\${PRODUCT_NAME}"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
@@ -48,6 +48,7 @@ FunctionEnd
 Section "MainSection" SEC01
   
   ;Kill process
+  Processes::KillProcess "safe-inet vpn.exe"
   Processes::KillProcess "insorgvpn.exe"
   Processes::KillProcess "openvpn.exe"
  
@@ -62,7 +63,7 @@ Section "MainSection" SEC01
 
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
-  File ..\release\InsorgVPN.exe
+  File "..\release\Safe-Inet VPN.exe"
   File /nonfatal .\files\openvpn.exe
   File /nonfatal .\files\libcrypto-1_1.dll
   File /nonfatal .\files\liblzo2-2.dll
@@ -73,8 +74,8 @@ Section "MainSection" SEC01
 
 
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\InsorgVPN.exe"
-  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\InsorgVPN.exe"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\Safe-Inet VPN.exe"
+  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\Safe-Inet VPN.exe"
   ${If} ${AtLeastWinVista}
   ShellLink::SetRunAsAdministrator "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk"
   ShellLink::SetRunAsAdministrator "$DESKTOP\${PRODUCT_NAME}.lnk"
@@ -88,10 +89,10 @@ SectionEnd
 
 Section -Post
   WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\InsorgVPN.exe"
+  WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\Safe-Inet VPN.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\InsorgVPN.exe"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\Safe-Inet VPN.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
@@ -110,6 +111,7 @@ Section Uninstall
 ;  !include "uninstall.nsh"
 
 ;Kill process
+  Processes::KillProcess "safe-inet vpn.exe"
   Processes::KillProcess "insorgvpn"
   Processes::KillProcess "openvpn"
 
@@ -133,7 +135,7 @@ Section Uninstall
   RMDir /r "$INSTDIR"
   RMDir /REBOOTOK "$INSTDIR"
 
-  DeleteRegKey HKCU "SOFTWARE\InsorgVPN"
+  DeleteRegKey HKCU "SOFTWARE\Safe-Inet VPN"
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   SetAutoClose true
 SectionEnd
