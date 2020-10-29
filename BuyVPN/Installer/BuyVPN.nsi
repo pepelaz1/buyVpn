@@ -75,7 +75,11 @@ Section "MainSection" SEC01
 
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\Safe-Inet VPN.exe"
-  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\Safe-Inet VPN.exe"
+  MessageBox MB_YESNO|MB_ICONQUESTION "Create desktop shortcut?" IDYES true IDNO false
+  true:
+	CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\Safe-Inet VPN.exe"
+  false:
+
   ${If} ${AtLeastWinVista}
   ShellLink::SetRunAsAdministrator "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk"
   ShellLink::SetRunAsAdministrator "$DESKTOP\${PRODUCT_NAME}.lnk"
