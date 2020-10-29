@@ -170,6 +170,9 @@ void CConfigurations::PopulateCountriesMap()
 	m_Countries.SetAt(L"ru-DE2", L"Германия 2");
 	m_Countries.SetAt(L"en-DE2", L"Germany 2");
 
+	m_Countries.SetAt(L"ru-DE3", L"Германия 3");
+	m_Countries.SetAt(L"en-DE3", L"Germany 3");
+
 	m_Countries.SetAt(L"ru-EE", L"Эстония");
 	m_Countries.SetAt(L"en-EE", L"Estonia");
 
@@ -184,6 +187,9 @@ void CConfigurations::PopulateCountriesMap()
 
 	m_Countries.SetAt(L"ru-FR3", L"Франция 3");
 	m_Countries.SetAt(L"en-FR3", L"France 3");
+
+	m_Countries.SetAt(L"ru-FR4", L"Франция 4");
+	m_Countries.SetAt(L"en-FR4", L"France 4");
 
 	m_Countries.SetAt(L"ru-IT", L"Италия");
 	m_Countries.SetAt(L"en-IT", L"Italy");
@@ -209,6 +215,9 @@ void CConfigurations::PopulateCountriesMap()
 	m_Countries.SetAt(L"ru-MY", L"Малайзия");
 	m_Countries.SetAt(L"en-MY", L"Malaysia");
 
+	m_Countries.SetAt(L"ru-MY2", L"Малайзия 2");
+	m_Countries.SetAt(L"en-MY2", L"Malaysia 2");
+
 	m_Countries.SetAt(L"ru-NL", L"Нидерланды 1");
 	m_Countries.SetAt(L"en-NL", L"Netherlands 1");
 
@@ -217,6 +226,9 @@ void CConfigurations::PopulateCountriesMap()
 
 	m_Countries.SetAt(L"ru-NL3", L"Нидерланды 3");
 	m_Countries.SetAt(L"en-NL3", L"Netherlands 3");
+
+	m_Countries.SetAt(L"ru-NL4", L"Нидерланды 4");
+	m_Countries.SetAt(L"en-NL4", L"Netherlands 4");
 
 	m_Countries.SetAt(L"ru-PA", L"Панама");
 	m_Countries.SetAt(L"en-PA", L"Panama");
@@ -230,6 +242,9 @@ void CConfigurations::PopulateCountriesMap()
 	m_Countries.SetAt(L"ru-RU", L"Россия");
 	m_Countries.SetAt(L"en-RU", L"Russia");
 
+	m_Countries.SetAt(L"ru-RU2", L"Россия 2");
+	m_Countries.SetAt(L"en-RU2", L"Russia 2");
+
 	m_Countries.SetAt(L"ru-SE", L"Швеция");
 	m_Countries.SetAt(L"en-SE", L"Sweden");
 
@@ -242,14 +257,17 @@ void CConfigurations::PopulateCountriesMap()
 	m_Countries.SetAt(L"ru-UA", L"Украина");
 	m_Countries.SetAt(L"en-UA", L"Ukraine");
 
-	m_Countries.SetAt(L"ru-UK", L"Великобритация 1");
+	m_Countries.SetAt(L"ru-UK", L"Великобритания 1");
 	m_Countries.SetAt(L"en-UK", L"United Kingdom 1");
 
-	m_Countries.SetAt(L"ru-UK2", L"Великобритация 2");
+	m_Countries.SetAt(L"ru-UK2", L"Великобритания 2");
 	m_Countries.SetAt(L"en-UK2", L"United Kingdom 2");
 
-	m_Countries.SetAt(L"ru-UK3", L"Великобритация 3");
+	m_Countries.SetAt(L"ru-UK3", L"Великобритания 3");
 	m_Countries.SetAt(L"en-UK3", L"United Kingdom 3");
+
+	m_Countries.SetAt(L"ru-UK4", L"Великобритания 4");
+	m_Countries.SetAt(L"en-UK4", L"United Kingdom 4");
 
 	m_Countries.SetAt(L"ru-US1", L"США 1");
 	m_Countries.SetAt(L"en-US1", L"USA 1");
@@ -265,5 +283,8 @@ void CConfigurations::PopulateCountriesMap()
 
 	m_Countries.SetAt(L"ru-US5", L"США 5");
 	m_Countries.SetAt(L"en-US5", L"USA 5");
+
+	m_Countries.SetAt(L"ru-US6", L"США 6");
+	m_Countries.SetAt(L"en-US6", L"USA 6");
 }
 
