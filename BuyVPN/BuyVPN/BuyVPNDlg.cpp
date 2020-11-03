@@ -137,7 +137,7 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	m_btnConnect.SetColor(CButtonST::BTNST_COLOR_FG_OUT, RGB(255,255,255), FALSE);
 	m_btnConnect.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, RGB(0x3a,0x3a,0x3a), FALSE);
 	m_btnConnect.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, RGB(255,255,100), FALSE);
-	m_btnConnect.SetBitmaps(IDB_BIGGREENHL, RGB(0x3a,0x3a,0x3a), IDB_BIGGREEN, RGB(0x3a,0x3a,0x3a));
+	m_btnConnect.SetBitmaps(IDB_BIGGREENHL, RGB(0x3a,0x3a,0x3a), IDB_BIGGREEN, RGB(0x3a,0x3a,0x3a), TRUE);
 
 	m_btnEdit.SetAlign(CButtonST::ST_ALIGN_OVERLAP, FALSE);
 	m_btnEdit.SetFlat(TRUE, FALSE);
@@ -149,7 +149,7 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	m_btnEdit.SetColor(CButtonST::BTNST_COLOR_FG_OUT, RGB(255,255,255), FALSE);
 	m_btnEdit.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, RGB(0x3a,0x3a,0x3a), FALSE);
 	m_btnEdit.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, RGB(255,255,100), FALSE);
-	m_btnEdit.SetBitmaps(IDB_MIDBLUEHL, RGB(0x3a,0x3a,0x3a), IDB_MIDBLUE, RGB(0x3a,0x3a,0x3a));
+	m_btnEdit.SetBitmaps(IDB_MIDBLUEHL, RGB(0x3a,0x3a,0x3a), IDB_MIDBLUE, RGB(0x3a,0x3a,0x3a), TRUE);
 
 	m_btnShowLog.SetAlign(CButtonST::ST_ALIGN_OVERLAP, FALSE);
 	m_btnShowLog.SetFlat(TRUE, FALSE);
@@ -161,7 +161,7 @@ BOOL CBuyVPNDlg::OnInitDialog()
 	m_btnShowLog.SetColor(CButtonST::BTNST_COLOR_FG_OUT, RGB(255,255,255), FALSE);
 	m_btnShowLog.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, RGB(0x3a,0x3a,0x3a), FALSE);
 	m_btnShowLog.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, RGB(255,255,100), FALSE);
-	m_btnShowLog.SetBitmaps(IDB_MIDBLUEHL, RGB(0x3a,0x3a,0x3a), IDB_MIDBLUE, RGB(0x3a,0x3a,0x3a));
+	m_btnShowLog.SetBitmaps(IDB_MIDBLUEHL, RGB(0x3a,0x3a,0x3a), IDB_MIDBLUE, RGB(0x3a,0x3a,0x3a), TRUE);
 
 	m_btnExit.SetFlat(TRUE, FALSE);
 	m_btnExit.DrawBorder(FALSE, FALSE);

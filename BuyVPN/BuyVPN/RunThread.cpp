@@ -66,8 +66,8 @@ VOID CRunThread::Work()
 
 	if (m_pOptions->m_fCheckAccount && !DoAuth())
 	{
-		Close();
-		return;
+		//Close();
+		//return;
 	}
 
 	if (m_hExitEvent == NULL || m_hExitEvent == INVALID_HANDLE_VALUE)
@@ -85,12 +85,12 @@ VOID CRunThread::Work()
 	if (!m_pOptions->m_strUsername.IsEmpty() && !m_pOptions->m_strPassword.IsEmpty())
 	{
 		CreateAuthFile();
-		strCommandLine.Format(TEXT("openvpn.exe --config \"%s\" --service %s 0 --auth-user-pass \"%s\" --cd \"%s\""),
+		strCommandLine.Format(TEXT("openvpn.exe --config \"%s\" --service \"%s\" 0 --auth-user-pass \"%s\" --cd \"%s\""),
 			strConfigFilename, m_strExitEventName, m_strAuthFilename, strConfigDir);
 	}
 	else
 	{
-		strCommandLine.Format(TEXT("openvpn.exe --config \"%s\" --service %s 0 --cd \"%s\""),
+		strCommandLine.Format(TEXT("openvpn.exe --config \"%s\" --service \"%s\" 0 --cd \"%s\""),
 			strConfigFilename, m_strExitEventName, strConfigDir);
 	}
 

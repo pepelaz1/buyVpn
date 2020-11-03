@@ -1390,7 +1390,7 @@ DWORD CButtonST::SetIcon(HICON hIconIn, HICON hIconOut)
 //		BTNST_FAILEDMASK
 //			Failed creating mask bitmap.
 //
-DWORD CButtonST::SetBitmaps(int nBitmapIn, COLORREF crTransColorIn, int nBitmapOut, COLORREF crTransColorOut)
+DWORD CButtonST::SetBitmaps(int nBitmapIn, COLORREF crTransColorIn, int nBitmapOut, COLORREF crTransColorOut, BOOL useButtonDimensions)
 {
 	HBITMAP		hBitmapIn		= NULL;
 	HBITMAP		hBitmapOut		= NULL;
@@ -1399,8 +1399,14 @@ DWORD CButtonST::SetBitmaps(int nBitmapIn, COLORREF crTransColorIn, int nBitmapO
 	// Find correct resource handle
 	hInstResource = AfxFindResourceHandle(MAKEINTRESOURCE(nBitmapIn), RT_BITMAP);
 
+	RECT rc;
+	GetWindowRect(&rc);
 	// Load bitmap In
-	hBitmapIn = (HBITMAP)::LoadImage(hInstResource, MAKEINTRESOURCE(nBitmapIn), IMAGE_BITMAP, 0, 0, 0);
+	if (useButtonDimensions)
+		hBitmapIn = (HBITMAP)::LoadImage(hInstResource, MAKEINTRESOURCE(nBitmapIn), IMAGE_BITMAP, rc.right - rc.left, rc.bottom - rc.top, 0);
+	else 
+		hBitmapIn = (HBITMAP)::LoadImage(hInstResource, MAKEINTRESOURCE(nBitmapIn), IMAGE_BITMAP, 0, 0, 0);
+
 
 	// Load bitmap Out
 	switch (nBitmapOut)
@@ -1414,7 +1420,11 @@ DWORD CButtonST::SetBitmaps(int nBitmapIn, COLORREF crTransColorIn, int nBitmapO
 			hBitmapOut = (HBITMAP)BTNST_AUTO_DARKER;
 			break;
 		default:
-			hBitmapOut = (HBITMAP)::LoadImage(hInstResource, MAKEINTRESOURCE(nBitmapOut), IMAGE_BITMAP, 0, 0, 0);
+			if (useButtonDimensions)
+				hBitmapOut = (HBITMAP)::LoadImage(hInstResource, MAKEINTRESOURCE(nBitmapOut), IMAGE_BITMAP, rc.right-rc.left, rc.bottom - rc.top, 0);
+			else
+				hBitmapOut = (HBITMAP)::LoadImage(hInstResource, MAKEINTRESOURCE(nBitmapOut), IMAGE_BITMAP, 0, 0, 0);
+
 			break;
 	} // if
 
@@ -1463,8 +1473,12 @@ DWORD CButtonST::SetBitmaps(HBITMAP hBitmapIn, COLORREF crTransColorIn, HBITMAP 
 			FreeResources();
 			return BTNST_INVALIDRESOURCE;
 		} // if
+		RECT rc;
+		GetWindowRect(&rc);
+
 		m_csBitmaps[0].dwWidth = (DWORD)csBitmapSize.bmWidth;
 		m_csBitmaps[0].dwHeight = (DWORD)csBitmapSize.bmHeight;
+	
 
 		// Create grayscale/darker bitmap BEFORE mask (of hBitmapIn)
 		switch ((int)hBitmapOut)
